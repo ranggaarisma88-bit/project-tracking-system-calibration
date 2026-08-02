@@ -194,7 +194,7 @@
             <button class="btn-print-all" onclick="printAll()">PRINT SEMUA</button>
             <button class="btn-sm btn-green" onclick="bukaModalImport()" id="btnImport">[IMPORT] CSV</button>
             <button class="btn-sm btn-outline" onclick="backupData()">[BACKUP]</button>
-            <button class="btn-sm btn-cyan" onclick="bukaModalCloud()">[CLOUD]</button>
+            <button class="btn-sm btn-cyan" onclick="bukaModalCloud()" id="btnCloud">[CLOUD]</button>
             <button class="btn-sm btn-red" onclick="resetAllSettings()">[RESET]</button>
             <button class="btn-sm btn-gold" onclick="bukaModalTambah()" id="btnTambah">Input Data</button>
         </div>
@@ -242,11 +242,11 @@
 </div></div>
 <div class="modal-overlay" id="modalCloud"><div class="modal-box" style="max-width:360px;">
     <h3>Cloud Options</h3>
-    <button class="btn-submit" style="background:#1a3a2a;color:var(--green);border:2px solid var(--green);" onclick="backupToCloud();tutupModal('modalCloud')">Backup ke Cloud</button>
-    <button class="btn-submit" style="background:#1a2a3a;color:var(--blue);border:2px solid var(--blue);" onclick="restoreFromCloud()">Restore dari Cloud</button>
-    <button class="btn-submit" style="background:#3a1a1a;color:var(--red);border:2px solid var(--red);" onclick="clearCloudWithPin()">Clear Cloud</button>
-    <button class="btn-submit" style="background:#1a1a2a;color:var(--gold);border:2px solid var(--gold);" onclick="bukaSettingPinAdmin()">Ganti PIN Engineer</button>
-    <button class="btn-submit" style="background:#1a1a2a;color:var(--gold);border:2px solid var(--gold);" onclick="bukaSettingPinViewer()">Ganti PIN Viewer</button>
+    <button class="btn-submit" style="background:#1a3a2a;color:var(--green);border:2px solid var(--green);" onclick="backupToCloud();tutupModal('modalCloud')" id="btnBackupCloud">Backup ke Cloud</button>
+    <button class="btn-submit" style="background:#1a2a3a;color:var(--blue);border:2px solid var(--blue);" onclick="restoreFromCloud()" id="btnRestoreCloud">Restore dari Cloud</button>
+    <button class="btn-submit" style="background:#3a1a1a;color:var(--red);border:2px solid var(--red);" onclick="clearCloudWithPin()" id="btnClearCloud">Clear Cloud</button>
+    <button class="btn-submit" style="background:#1a1a2a;color:var(--gold);border:2px solid var(--gold);" onclick="bukaSettingPinAdmin()" id="btnGantiPIN">Ganti PIN Engineer</button>
+    <button class="btn-submit" style="background:#1a1a2a;color:var(--gold);border:2px solid var(--gold);" onclick="bukaSettingPinViewer()" id="btnGantiPINViewer">Ganti PIN Viewer</button>
     <button class="btn-submit" style="background:#222;color:#888;margin-top:4px;" onclick="tutupModal('modalCloud')">Tutup</button>
 </div></div>
 <div class="modal-overlay" id="modalSettingPin"><div class="modal-box" style="max-width:340px;">
@@ -277,7 +277,37 @@ var deferredPrompt = null;
 if (!localStorage.getItem(PIN_ADMIN_KEY)) localStorage.setItem(PIN_ADMIN_KEY, '123456');
 if (!localStorage.getItem(PIN_VIEWER_KEY)) localStorage.setItem(PIN_VIEWER_KEY, '0000');
 function doLogin(){var p=document.getElementById('pinInput').value;if(p===localStorage.getItem(PIN_ADMIN_KEY))setSession('admin');else if(p===localStorage.getItem(PIN_VIEWER_KEY))setSession('viewer');else{document.getElementById('loginError').style.display='block';document.getElementById('pinInput').value='';document.getElementById('pinInput').focus();setTimeout(function(){document.getElementById('loginError').style.display='none'},2000)}}
-function setSession(r){localStorage.setItem(ROLE_KEY,r);localStorage.setItem(LOGIN_TIME_KEY,Date.now());document.getElementById('loginScreen').style.display='none';document.getElementById('mainApp').style.display='block';var b=document.getElementById('userBadge');b.textContent=r==='admin'?'ENGINEER':'VIEWER';b.className='user-badge '+r;document.getElementById('btnTambah').style.display=r==='admin'?'inline-block':'none';document.getElementById('btnImport').style.display=r==='admin'?'inline-block':'none';document.getElementById('thAksi').style.display=r==='admin'?'':'none';document.querySelectorAll('.print-actions .btn-outline, .print-actions .btn-cyan, .print-actions .btn-red').forEach(function(el){el.style.display=r==='admin'?'inline-block':'none'});document.getElementById('pinInput').value='';renderAll();startLogoutTimer()}
+
+// PERBAIKAN: Cloud tetap muncul untuk Viewer, hanya tombol tertentu yang disembunyikan
+function setSession(r){
+    localStorage.setItem(ROLE_KEY,r);
+    localStorage.setItem(LOGIN_TIME_KEY,Date.now());
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('mainApp').style.display='block';
+    var b=document.getElementById('userBadge');
+    b.textContent=r==='admin'?'ENGINEER':'VIEWER';
+    b.className='user-badge '+r;
+    
+    // Hanya admin yang bisa Tambah, Import, Reset
+    document.getElementById('btnTambah').style.display=r==='admin'?'inline-block':'none';
+    document.getElementById('btnImport').style.display=r==='admin'?'inline-block':'none';
+    document.getElementById('thAksi').style.display=r==='admin'?'':'none';
+    
+    // Tombol BACKUP & RESET hanya untuk admin
+    document.querySelectorAll('.print-actions .btn-outline, .print-actions .btn-red').forEach(function(el){
+        el.style.display=r==='admin'?'inline-block':'none';
+    });
+    
+    // CLOUD TETAP MUNCUL UNTUK SEMUA ROLE (admin & viewer)
+    document.querySelectorAll('.print-actions .btn-cyan').forEach(function(el){
+        el.style.display='inline-block';
+    });
+    
+    document.getElementById('pinInput').value='';
+    renderAll();
+    startLogoutTimer();
+}
+
 function doLogout(){localStorage.removeItem(ROLE_KEY);localStorage.removeItem(LOGIN_TIME_KEY);document.getElementById('loginScreen').style.display='flex';document.getElementById('mainApp').style.display='none';document.getElementById('pinInput').focus();stopClock()}
 function checkSession(){var r=localStorage.getItem(ROLE_KEY),t=localStorage.getItem(LOGIN_TIME_KEY);if(!r||!t){doLogout();return}if(Date.now()-parseInt(t)>AUTO_LOGOUT){doLogout();showToast('Sesi habis.','warn');return}localStorage.setItem(LOGIN_TIME_KEY,Date.now());setSession(r)}
 function startLogoutTimer(){if(logoutInterval)clearInterval(logoutInterval);logoutInterval=setInterval(function(){var t=localStorage.getItem(LOGIN_TIME_KEY);if(t&&Date.now()-parseInt(t)>AUTO_LOGOUT){doLogout();showToast('Sesi habis.','warn')}},30000)}
@@ -329,7 +359,35 @@ function simpanData(){if(localStorage.getItem(ROLE_KEY)!=='admin')return;var eid
 function hapusData(id){if(localStorage.getItem(ROLE_KEY)!=='admin')return;if(!confirm('Hapus?'))return;saveData(getData().filter(function(i){return i.id!==id}));renderAll();showToast('Deleted!')}
 function resetAllSettings(){if(localStorage.getItem(ROLE_KEY)!=='admin')return;if(!confirm('RESET SEMUA?'))return;if(confirm('Download backup dulu?'))exportCSV();localStorage.removeItem(STORAGE_KEY);renderAll();showToast('Reset!')}
 function bukaModalImport(){if(localStorage.getItem(ROLE_KEY)!=='admin')return;document.getElementById('modalImport').classList.add('active')}
-function bukaModalCloud(){if(localStorage.getItem(ROLE_KEY)!=='admin')return;document.getElementById('modalCloud').classList.add('active')}
+
+// PERBAIKAN: Viewer bisa buka Cloud (hanya untuk Restore)
+function bukaModalCloud(){
+    var role = localStorage.getItem(ROLE_KEY);
+    document.getElementById('modalCloud').classList.add('active');
+    
+    // Sembunyikan tombol yang hanya untuk admin
+    var btnBackup = document.getElementById('btnBackupCloud');
+    var btnClear = document.getElementById('btnClearCloud');
+    var btnGantiPIN = document.getElementById('btnGantiPIN');
+    var btnGantiPINViewer = document.getElementById('btnGantiPINViewer');
+    var btnRestore = document.getElementById('btnRestoreCloud');
+    
+    if (role === 'admin') {
+        if (btnBackup) btnBackup.style.display = '';
+        if (btnClear) btnClear.style.display = '';
+        if (btnGantiPIN) btnGantiPIN.style.display = '';
+        if (btnGantiPINViewer) btnGantiPINViewer.style.display = '';
+    } else {
+        // Viewer hanya bisa RESTORE
+        if (btnBackup) btnBackup.style.display = 'none';
+        if (btnClear) btnClear.style.display = 'none';
+        if (btnGantiPIN) btnGantiPIN.style.display = 'none';
+        if (btnGantiPINViewer) btnGantiPINViewer.style.display = 'none';
+    }
+    // Tombol Restore selalu muncul untuk semua role
+    if (btnRestore) btnRestore.style.display = '';
+}
+
 function tutupModal(id){var m=document.getElementById(id);if(m)m.classList.remove('active')}
 function importCSV(e){if(localStorage.getItem(ROLE_KEY)!=='admin')return;var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){var lines=ev.target.result.split('\n').filter(function(l){return l.trim()!==''});if(lines.length<2){alert('File kosong!');return}var delim=lines[0].includes(';')?';':',';var h=lines[0].split(delim).map(function(x){return x.replace(/"/g,'').toLowerCase().trim()});var idx={wo:-1,ws:-1,tag:-1,dp:-1,sec:-1,si:-1,per:-1,tc:-1,te:-1,ket:-1};h.forEach(function(x,i){if(x.includes('wo status'))idx.ws=i;if(x.includes('wo'))idx.wo=i;if(x.includes('tag'))idx.tag=i;if(x.includes('dept'))idx.dp=i;if(x.includes('section'))idx.sec=i;if(x.includes('site'))idx.si=i;if(x.includes('period'))idx.per=i;if(x.includes('kalibrasi')||x.includes('tgl cal'))idx.tc=i;if(x.includes('expired')||x.includes('tgl exp'))idx.te=i;if(x.includes('ket'))idx.ket=i});if(idx.tag===-1){alert('Kolom Tag No tidak ditemukan!');return}var data=getData(),imp=0;for(var i=1;i<lines.length;i++){var cols=lines[i].split(delim).map(function(x){return x.replace(/"/g,'').trim()});var tag=cols[idx.tag];if(!tag)continue;var tc=idx.tc!==-1?parseDate(cols[idx.tc]):'';if(!tc)continue;data.push({id:genID(),wo:idx.wo!==-1?cols[idx.wo]:'',woStatus:idx.ws!==-1&&cols[idx.ws]==='1',woPrinted:idx.ws!==-1&&cols[idx.ws]==='1',tag:tag,deptPlant:idx.dp!==-1?cols[idx.dp]:'',section:idx.sec!==-1?cols[idx.sec]:'',site:idx.si!==-1?cols[idx.si]:'',period:idx.per!==-1?parseInt(cols[idx.per])||12:12,tglCal:tc,tglExp:idx.te!==-1?parseDate(cols[idx.te]):'',ket:idx.ket!==-1?cols[idx.ket]:''});imp++}saveData(data);renderAll();alert('Import: '+imp+' data')};r.readAsText(f);e.target.value=''}
 function printByDate(){var d=parseDate(document.getElementById('printDari').value),s=parseDate(document.getElementById('printSampai').value);if(!d||!s){alert('Isi tanggal! (DD/MM/YYYY)');return}var data=getData().filter(function(i){return i.tglCal>=d&&i.tglCal<=s});if(!data.length){alert('Tidak ada data.');return}doPrint(data,'Laporan '+fmtTgl(d)+' - '+fmtTgl(s))}
@@ -338,60 +396,23 @@ function doPrint(data,title){var rows='';data.forEach(function(i,idx){var st=get
 function exportCSV(){var data=getData(),csv='WO,WO Status,Tag No,Dept/Plant,Section,Site,Period,Tgl Kalibrasi,Tgl Expired,Keterangan\n';data.forEach(function(i){csv+=(i.wo||'')+','+(isPrinted(i)?'1':'0')+','+i.tag+','+i.deptPlant+','+i.section+','+i.site+','+i.period+','+i.tglCal+','+i.tglExp+','+(i.ket||'')+'\n'});var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv]));a.download='backup.csv';a.click()}
 function showToast(m,type){var t=document.createElement('div');t.className='toast'+(type==='warn'?' warn':'');t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity 0.3s';setTimeout(function(){if(t.parentNode)t.remove()},300)},2000)}
 
-// ==================== PWA INSTALL - TOMBOL POJOK KANAN BAWAH ====================
-console.log('[PWA] Mendaftarkan event handler...');
-console.log('[PWA] Protocol:', window.location.protocol);
-console.log('[PWA] Hostname:', window.location.hostname);
-
+// ==================== PWA INSTALL ====================
 window.addEventListener('beforeinstallprompt', function(e) {
     console.log('[PWA] beforeinstallprompt fired!');
     e.preventDefault();
     deferredPrompt = e;
-    
     if (document.getElementById('installPWA')) return;
-    
     var btn = document.createElement('button');
     btn.id = 'installPWA';
     btn.innerHTML = '&#128187; INSTALL APP';
     btn.style.cssText = 'position:fixed;bottom:24px;right:24px;padding:14px 22px;border:none;border-radius:14px;background:#e0b040;color:#000;font-weight:bold;z-index:99999;box-shadow:0 4px 20px rgba(224,176,64,0.5);cursor:pointer;font-size:13px;letter-spacing:1px;font-family:Segoe UI,sans-serif;transition:all 0.3s ease;animation:fadeInUp 0.5s ease;';
-    
-    btn.onmouseover = function() {
-        btn.style.background = '#c09020';
-        btn.style.transform = 'scale(1.05)';
-    };
-    btn.onmouseout = function() {
-        btn.style.background = '#e0b040';
-        btn.style.transform = 'scale(1)';
-    };
-    
+    btn.onmouseover = function(){btn.style.background='#c09020';btn.style.transform='scale(1.05)';};
+    btn.onmouseout = function(){btn.style.background='#e0b040';btn.style.transform='scale(1)';};
     document.body.appendChild(btn);
-    console.log('[PWA] Tombol INSTALL APP ditambahkan!');
-    
-    btn.addEventListener('click', async function() {
-        btn.remove();
-        deferredPrompt.prompt();
-        var result = await deferredPrompt.userChoice;
-        console.log('[PWA] User choice:', result.outcome);
-        deferredPrompt = null;
-    });
+    btn.addEventListener('click', async function(){btn.remove();deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;});
 });
+window.addEventListener('appinstalled', function(){var btn=document.getElementById('installPWA');if(btn)btn.remove();deferredPrompt=null;});
 
-window.addEventListener('appinstalled', function() {
-    console.log('[PWA] App installed!');
-    var btn = document.getElementById('installPWA');
-    if (btn) btn.remove();
-    deferredPrompt = null;
-});
-
-// Cek apakah PWA belum fired setelah 5 detik
-setTimeout(function() {
-    if (!deferredPrompt) {
-        console.log('[PWA] INFO: beforeinstallprompt belum fired setelah 5 detik.');
-        console.log('[PWA] Kemungkinan: sudah di-install / bukan HTTPS / SW belum aktif');
-    }
-}, 5000);
-
-// ==================== INIT ====================
 function init(){
     startClock();
     checkSession();
@@ -400,7 +421,7 @@ function init(){
     document.querySelectorAll('#modalForm input:not([readonly]), #modalForm select').forEach(function(inp,idx,arr){inp.addEventListener('keypress',function(e){if(e.key==='Enter'){e.preventDefault();if(idx===arr.length-1||inp.id==='mKet')simpanData();else arr[idx+1].focus()}})});
     document.addEventListener('keydown',function(e){if(e.key==='Escape'){var m=document.querySelector('.modal-overlay.active');if(m)tutupModal(m.id)}});
     document.addEventListener('click',function(e){if(!e.target.closest('.filter-btn')&&!e.target.closest('.filter-dropdown')){document.querySelectorAll('.filter-dropdown').forEach(function(d){d.classList.remove('show')})}});
-    if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').then(function(registration){console.log('[PWA] SW registered:',registration.scope)}).catch(function(error){console.error('[PWA] SW failed:',error)})})}
+    if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').then(function(registration){console.log('[PWA] SW registered:',registration.scope)}).catch(function(error){console.warn('[PWA] SW failed:',error.message)})})}
 }
 ['modalForm','modalImport','modalCloud','modalSettingPin'].forEach(function(id){document.getElementById(id).addEventListener('click',function(e){if(e.target===this)tutupModal(id)})});
 init();
