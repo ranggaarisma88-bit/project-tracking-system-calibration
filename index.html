@@ -53,12 +53,16 @@
         .btn-logout{font-size:9px;padding:4px 10px;border-radius:16px;background:transparent;color:var(--red);border:1px solid var(--red);cursor:pointer;font-weight:700;letter-spacing:1px;transition:all 0.3s}
         .btn-logout:hover{background:var(--red);color:#fff}
         .dash-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:10px}
-        .dash-card{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.2s}
-        .dash-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.4),0 0 15px rgba(224,176,64,0.1)}
+        .dash-card{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:14px 8px;text-align:center;transition:all 0.2s}
+        .dash-card.clickable{cursor:pointer}
+        .dash-card.clickable:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.4),0 0 15px rgba(224,176,64,0.1)}
         .dash-card .val{font-size:28px;font-weight:900}
         .dash-card .lbl{font-size:8px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;color:var(--muted);font-weight:700}
-        .dash-card.total .val{color:var(--blue)}.dash-card.valid .val{color:var(--green)}
-        .dash-card.warn .val{color:var(--orange)}.dash-card.exp .val{color:var(--red);animation:blink 1s infinite}
+        .dash-card.total{border-color:rgba(0,212,255,0.4)!important;box-shadow:0 0 20px rgba(0,212,255,0.15),inset 0 0 20px rgba(0,212,255,0.05)!important;cursor:default!important}
+        .dash-card.total:hover{border-color:rgba(0,212,255,0.4)!important;transform:none!important;box-shadow:0 0 20px rgba(0,212,255,0.15),inset 0 0 20px rgba(0,212,255,0.05)!important}
+        .dash-card.total .val{color:var(--blue);text-shadow:0 0 15px rgba(0,212,255,0.5)}
+        .dash-card.valid .val{color:var(--green)}.dash-card.warn .val{color:var(--orange)}
+        .dash-card.exp .val{color:var(--red);animation:blink 1s infinite}
         .dash-card.printed .val{color:var(--gold)}.dash-card.unprinted .val{color:#aaa}
         @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
         .chart-box{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:14px}
@@ -97,8 +101,11 @@
         .table-controls{display:flex;gap:8px;margin-bottom:8px;align-items:center;flex-wrap:wrap}
         .table-wrap{overflow-x:auto;background:var(--card);border:2px solid var(--border);border-radius:12px}
         table{width:100%;border-collapse:collapse;font-size:11px;min-width:1100px}
-        th{padding:12px 5px;background:#151515;color:var(--muted);text-transform:uppercase;font-size:8px;border-bottom:2px solid var(--border);letter-spacing:1px;text-align:center;font-weight:800;white-space:nowrap;position:relative}
-        th .filter-btn{cursor:pointer;user-select:none}
+        th{padding:12px 5px;background:#151515;color:var(--muted);text-transform:uppercase;font-size:8px;border-bottom:2px solid var(--border);letter-spacing:1px;text-align:center;font-weight:800;white-space:nowrap;position:relative;user-select:none}
+        th.sortable{cursor:pointer;transition:all 0.3s}
+        th.sortable:hover{color:var(--gold);text-shadow:0 0 10px rgba(224,176,64,0.6)}
+        th.sorted{color:var(--gold)!important;text-shadow:0 0 15px rgba(224,176,64,0.8),0 0 30px rgba(224,176,64,0.4)!important;background:#1a1a1a!important;border-bottom:2px solid var(--gold)!important}
+        th .filter-btn{cursor:pointer;user-select:none;position:relative;z-index:2}
         th .filter-btn:hover{color:var(--gold)}
         th .filter-dropdown{display:none;position:absolute;top:100%;left:0;background:#1a1a1a;border:2px solid var(--gold);border-radius:8px;z-index:99;min-width:150px;max-height:200px;overflow-y:auto;padding:8px}
         th .filter-dropdown.show{display:block}
@@ -138,7 +145,7 @@
         .toast{position:fixed;top:20px;right:20px;background:#1a3a1a;border:1px solid var(--green);color:var(--green);padding:10px 16px;border-radius:8px;font-weight:700;font-size:11px;z-index:99999;animation:slideIn 0.3s ease}
         .toast.warn{background:#1a1a0a;border-color:var(--orange);color:var(--orange)}
         @keyframes slideIn{from{opacity:0;transform:translateX(100px)}to{opacity:1;transform:translateX(0)}}
-        @media print{@page{size:A4 landscape;margin:5mm}body{background:#fff!important;color:#000!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.top-bar,.toolbar,.filter-top,.print-toolbar,.table-controls,.pagination,.backup-info,.chart-box,.dash-grid,.header-status,.user-row,.btn-action,.toast,#chartGrid{display:none!important}.table-wrap{overflow:visible!important;border:1px solid #000!important}table{min-width:0!important;font-size:8px!important}th,td{border:1px solid #000!important;padding:2px!important;color:#000!important}th{background:#ddd!important}}
+        @media print{@page{size:A4 landscape;margin:5mm}body{background:#fff!important;color:#000!important}.top-bar,.toolbar,.filter-top,.print-toolbar,.table-controls,.pagination,.backup-info,.chart-box,.dash-grid,.header-status,.user-row,.btn-action,.toast,#chartGrid{display:none!important}.table-wrap{overflow:visible!important;border:1px solid #000!important}table{min-width:0!important;font-size:8px!important}th,td{border:1px solid #000!important;padding:2px!important;color:#000!important}th{background:#ddd!important;text-shadow:none!important;color:#000!important}}
         #fileCSV{display:none}
         .pin-input-large{font-size:18px!important;letter-spacing:10px!important;text-align:center!important;font-family:'Courier New',monospace!important}
         @media(max-width:768px){.dash-grid{grid-template-columns:repeat(3,1fr)}.modal-row{flex-direction:column}.filter-top{flex-direction:column}.filter-top input,.filter-top select{width:100%;min-width:0}.print-row{flex-direction:column}.print-actions{flex-direction:column}table{font-size:9px}}
@@ -147,7 +154,7 @@
 <body>
 <div id="loginScreen"><div class="login-box">
     <div class="logo-icon">&#9889;</div><h2>E&amp;I - CAL TRACK</h2><div class="sub">CALIBRATION TRACKING SYSTEM</div>
-    <input type="password" id="pinInput" maxlength="6" placeholder="******" autofocus>
+    <input type="password" id="pinInput" maxlength="6" placeholder="******" autofocus autocomplete="off">
     <button class="btn-login" onclick="doLogin()">MASUK</button>
     <div class="login-error" id="loginError">PIN salah! Coba lagi.</div>
 </div></div>
@@ -163,12 +170,12 @@
         </div>
     </div>
     <div class="dash-grid">
-        <div class="dash-card total"><div class="val" id="dashTotal">0</div><div class="lbl">Total</div></div>
-        <div class="dash-card valid"><div class="val" id="dashValid">0</div><div class="lbl">Valid</div></div>
-        <div class="dash-card warn"><div class="val" id="dashApproach">0</div><div class="lbl">Approaching</div></div>
-        <div class="dash-card exp"><div class="val" id="dashExpired">0</div><div class="lbl">Expired</div></div>
-        <div class="dash-card printed"><div class="val" id="dashPrinted">0</div><div class="lbl">WO Count</div></div>
-        <div class="dash-card unprinted"><div class="val" id="dashUnprinted">0</div><div class="lbl">No WO</div></div>
+        <div class="dash-card total"><div class="val" id="dashTotal">0</div><div class="lbl">Total Instruments</div></div>
+        <div class="dash-card valid clickable" onclick="filterByStatus('ok')"><div class="val" id="dashValid">0</div><div class="lbl">Valid</div></div>
+        <div class="dash-card warn clickable" onclick="filterByStatus('warn')"><div class="val" id="dashApproach">0</div><div class="lbl">Approaching</div></div>
+        <div class="dash-card exp clickable" onclick="filterByStatus('exp')"><div class="val" id="dashExpired">0</div><div class="lbl">Expired</div></div>
+        <div class="dash-card printed clickable" onclick="filterByPrinted('yes')"><div class="val" id="dashPrinted">0</div><div class="lbl">With WO</div></div>
+        <div class="dash-card unprinted clickable" onclick="filterByPrinted('no')"><div class="val" id="dashUnprinted">0</div><div class="lbl">Without WO</div></div>
     </div>
     <div style="display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:10px;">
         <div class="chart-box"><h4>Calibration by Month</h4><canvas id="chartBulan" style="max-height:200px;"></canvas></div>
@@ -179,19 +186,17 @@
         <span>Backup: <b id="infoBackup">-</b></span> | <span>Cloud: <b id="infoCloud">-</b></span>
     </div>
     <div class="filter-top">
-        <input type="text" id="fSearchTag" placeholder="Cari Tag No..." oninput="renderAll()">
-        <select id="fBulanCal" onchange="renderAll()"><option value="">Bulan Kalibrasi</option></select>
-        <select id="fTahun" onchange="renderAll()"><option value="">All Tahun</option></select>
+        <input type="text" id="fSearchTag" placeholder="Cari Tag No..." oninput="resetPageAndRender()" autocomplete="off">
+        <select id="fStatus" onchange="resetPageAndRender()"><option value="">All Status</option><option value="ok">Valid</option><option value="warn">Approaching</option><option value="exp">Expired</option></select>
+        <select id="fPrinted" onchange="resetPageAndRender()"><option value="">All WO Status</option><option value="yes">With WO</option><option value="no">Without WO</option></select>
+        <select id="fBulanCal" onchange="resetPageAndRender()"><option value="">Bulan Kalibrasi</option></select>
+        <select id="fTahun" onchange="resetPageAndRender()"><option value="">All Tahun</option></select>
         <button class="btn-filter" onclick="resetFilter()">Reset</button><span class="tag-status" id="tagStatus"></span>
     </div>
     <div class="print-toolbar">
-        <div class="print-row">
-            <label>Print dari</label><input type="text" id="printDari" placeholder="DD/MM/YYYY">
-            <label>sampai</label><input type="text" id="printSampai" placeholder="DD/MM/YYYY">
-        </div>
+        <div class="print-row"><label>Print dari</label><input type="text" id="printDari" placeholder="DD/MM/YYYY" autocomplete="off"><label>sampai</label><input type="text" id="printSampai" placeholder="DD/MM/YYYY" autocomplete="off"></div>
         <div class="print-actions">
-            <button class="btn-print" onclick="printByDate()">PRINT RANGE</button>
-            <button class="btn-print-all" onclick="printAll()">PRINT SEMUA</button>
+            <button class="btn-print" onclick="printByDate()">PRINT RANGE</button><button class="btn-print-all" onclick="printAll()">PRINT SEMUA</button>
             <button class="btn-sm btn-green" onclick="bukaModalImport()" id="btnImport">[IMPORT] CSV</button>
             <button class="btn-sm btn-outline" onclick="backupData()">[BACKUP]</button>
             <button class="btn-sm btn-cyan" onclick="bukaModalCloud()" id="btnCloud">[CLOUD]</button>
@@ -201,21 +206,22 @@
     </div>
     <div class="table-controls">
         <button class="btn-sm btn-outline" id="btnToggleTable" onclick="toggleTable()" style="font-size:10px;">SEMBUNYIKAN TABEL</button>
-        <select id="rowsPerPage" onchange="changeRowsPerPage()" style="padding:8px 12px;border-radius:6px;font-size:10px;background:var(--input);color:#fff;border:2px solid var(--border);outline:none;">
-            <option value="20">20 baris</option><option value="50">50 baris</option><option value="100">100 baris</option>
-        </select>
+        <select id="rowsPerPage" onchange="changeRowsPerPage()" style="padding:8px 12px;border-radius:6px;font-size:10px;background:var(--input);color:#fff;border:2px solid var(--border);outline:none;"><option value="20">20 baris</option><option value="50">50 baris</option><option value="100">100 baris</option></select>
         <span style="font-size:10px;color:var(--muted);margin-left:auto;" id="tableInfo"></span>
     </div>
     <div class="table-wrap"><table>
         <thead><tr>
-            <th>No</th><th>WO</th><th>WO Count</th><th>Tag No</th>
-            <th><span class="filter-btn" onclick="toggleFilterDropdown('fDeptPlant')">Dept/Plant &#9660;</span><div class="filter-dropdown" id="fDeptPlant-dropdown"></div></th>
-            <th><span class="filter-btn" onclick="toggleFilterDropdown('fSection')">Section &#9660;</span><div class="filter-dropdown" id="fSection-dropdown"></div></th>
-            <th><span class="filter-btn" onclick="toggleFilterDropdown('fSite')">Site &#9660;</span><div class="filter-dropdown" id="fSite-dropdown"></div></th>
-            <th><span class="filter-btn" onclick="toggleFilterDropdown('fPeriod')">Period &#9660;</span><div class="filter-dropdown" id="fPeriod-dropdown"></div></th>
-            <th><span class="filter-btn" onclick="toggleFilterDropdown('fTglCal')">Tgl Kal &#9660;</span><div class="filter-dropdown" id="fTglCal-dropdown"></div></th>
-            <th><span class="filter-btn" onclick="toggleFilterDropdown('fTglExp')">Tgl Exp &#9660;</span><div class="filter-dropdown" id="fTglExp-dropdown"></div></th>
-            <th><span class="filter-btn" onclick="toggleFilterDropdown('fStatus')">Status &#9660;</span><div class="filter-dropdown" id="fStatus-dropdown"></div></th>
+            <th>No</th>
+            <th><span class="filter-btn" onclick="toggleFilterDropdown('fWOSt')">WO &#9660;</span><div class="filter-dropdown" id="fWOSt-dropdown"></div></th>
+            <th>WO Count</th>
+            <th class="sortable" onclick="sortTable('tag')" id="thTag">Tag No</th>
+            <th class="sortable" onclick="sortTable('dept')" id="thDept"><span class="filter-btn" onclick="event.stopPropagation();toggleFilterDropdown('fDeptPlant')">Dept/Plant &#9660;</span><div class="filter-dropdown" id="fDeptPlant-dropdown"></div></th>
+            <th class="sortable" onclick="sortTable('section')" id="thSec"><span class="filter-btn" onclick="event.stopPropagation();toggleFilterDropdown('fSection')">Section &#9660;</span><div class="filter-dropdown" id="fSection-dropdown"></div></th>
+            <th class="sortable" onclick="sortTable('site')" id="thSite"><span class="filter-btn" onclick="event.stopPropagation();toggleFilterDropdown('fSite')">Site &#9660;</span><div class="filter-dropdown" id="fSite-dropdown"></div></th>
+            <th class="sortable" onclick="sortTable('period')" id="thPeriod"><span class="filter-btn" onclick="event.stopPropagation();toggleFilterDropdown('fPeriod')">Period &#9660;</span><div class="filter-dropdown" id="fPeriod-dropdown"></div></th>
+            <th class="sortable" onclick="sortTable('tglCal')" id="thTglCal"><span class="filter-btn" onclick="event.stopPropagation();toggleFilterDropdown('fTglCal')">Tgl Kal &#9660;</span><div class="filter-dropdown" id="fTglCal-dropdown"></div></th>
+            <th class="sortable" onclick="sortTable('tglExp')" id="thTglExp"><span class="filter-btn" onclick="event.stopPropagation();toggleFilterDropdown('fTglExp')">Tgl Exp &#9660;</span><div class="filter-dropdown" id="fTglExp-dropdown"></div></th>
+            <th class="sortable" onclick="sortTable('status')" id="thStatus"><span class="filter-btn" onclick="event.stopPropagation();toggleFilterDropdown('fStatus')">Status &#9660;</span><div class="filter-dropdown" id="fStatus-dropdown"></div></th>
             <th>Ket</th><th id="thAksi">Aksi</th>
         </tr></thead>
         <tbody id="tabelBody"><tr><td colspan="13" class="empty-state">Belum ada data.</td></tr></tbody>
@@ -223,41 +229,10 @@
     <div class="pagination" id="pagination"></div>
 </div></div>
 
-<div class="modal-overlay" id="modalForm"><div class="modal-box">
-    <h3 id="modalTitle">Input Instrumen</h3><input type="hidden" id="editId">
-    <div class="modal-row"><div class="modal-col"><label>No WO (, + -) Opsional</label><input type="text" id="mWO" placeholder="118775, 118776"></div><div class="modal-col"><label>Tag No *</label><input type="text" id="mTag" placeholder="PT-001"></div></div>
-    <div class="wo-check-row"><input type="checkbox" id="mWOPrinted"><label for="mWOPrinted" style="color:var(--gold);">WO Sudah Dicetak</label></div>
-    <div class="modal-row"><div class="modal-col"><label>Dept / Plant</label><input type="text" id="mDeptPlant" placeholder="Produksi"></div><div class="modal-col"><label>Section</label><input type="text" id="mSection" placeholder="01"></div></div>
-    <div class="modal-row"><div class="modal-col"><label>Site</label><input type="text" id="mSite" placeholder="A1"></div><div class="modal-col"><label>Period</label><select id="mPeriod" onchange="hitungExpired()"><option value="6">6 Bulan</option><option value="12" selected>1 Tahun</option><option value="24">2 Tahun</option></select></div></div>
-    <div class="modal-row"><div class="modal-col"><label>Tgl Kalibrasi *</label><input type="text" id="mTglCal" placeholder="DD/MM/YYYY" onchange="hitungExpired()" autocomplete="off"></div><div class="modal-col"><label>Tgl Expired</label><input type="text" id="mTglExp" readonly style="color:var(--orange);font-weight:bold;" placeholder="Otomatis"></div></div>
-    <div class="modal-row"><div class="modal-col" style="flex:1"><label>Keterangan</label><input type="text" id="mKet" placeholder="Opsional"></div></div>
-    <button class="btn-submit" onclick="simpanData()">SIMPAN</button>
-    <button class="btn-submit" style="background:#222;color:#888;margin-top:4px;" onclick="tutupModal('modalForm')">BATAL</button>
-</div></div>
-<div class="modal-overlay" id="modalImport"><div class="modal-box">
-    <h3>[IMPORT] CSV</h3><div class="import-info-box"><b>Format:</b><br><span class="fmt">WO, WO Status, Tag No, Dept/Plant, Section, Site, Period, Tgl Kalibrasi, Tgl Expired, Keterangan</span></div>
-    <input type="file" id="fileCSV" accept=".csv" onchange="importCSV(event)">
-    <button class="btn-submit" onclick="document.getElementById('fileCSV').click()">Pilih File CSV</button>
-    <button class="btn-submit" style="background:#222;color:#888;margin-top:4px;" onclick="tutupModal('modalImport')">Tutup</button>
-</div></div>
-<div class="modal-overlay" id="modalCloud"><div class="modal-box" style="max-width:360px;">
-    <h3>Cloud Options</h3>
-    <button class="btn-submit" style="background:#1a3a2a;color:var(--green);border:2px solid var(--green);" onclick="backupToCloud();tutupModal('modalCloud')" id="btnBackupCloud">Backup ke Cloud</button>
-    <button class="btn-submit" style="background:#1a2a3a;color:var(--blue);border:2px solid var(--blue);" onclick="restoreFromCloud()" id="btnRestoreCloud">Restore dari Cloud</button>
-    <button class="btn-submit" style="background:#3a1a1a;color:var(--red);border:2px solid var(--red);" onclick="clearCloudWithPin()" id="btnClearCloud">Clear Cloud</button>
-    <button class="btn-submit" style="background:#1a1a2a;color:var(--gold);border:2px solid var(--gold);" onclick="bukaSettingPinAdmin()" id="btnGantiPIN">Ganti PIN Engineer</button>
-    <button class="btn-submit" style="background:#1a1a2a;color:var(--gold);border:2px solid var(--gold);" onclick="bukaSettingPinViewer()" id="btnGantiPINViewer">Ganti PIN Viewer</button>
-    <button class="btn-submit" style="background:#222;color:#888;margin-top:4px;" onclick="tutupModal('modalCloud')">Tutup</button>
-</div></div>
-<div class="modal-overlay" id="modalSettingPin"><div class="modal-box" style="max-width:340px;">
-    <h3 id="settingPinTitle">Ganti PIN</h3>
-    <div id="rowOldPin" class="modal-row"><div class="modal-col"><label>PIN Lama</label><input type="password" id="oldPinInput" maxlength="6" placeholder="******" class="pin-input-large"></div></div>
-    <div class="modal-row"><div class="modal-col"><label id="labelNewPin">PIN Baru</label><input type="password" id="newPinInput" maxlength="6" placeholder="******" class="pin-input-large"></div></div>
-    <div class="modal-row"><div class="modal-col"><label>Konfirmasi</label><input type="password" id="confirmPinInput" maxlength="6" placeholder="******" class="pin-input-large"></div></div>
-    <p id="settingPinMsg" style="text-align:center;font-size:10px;margin:6px 0;"></p>
-    <button class="btn-submit" onclick="simpanSettingPin()">SIMPAN PIN</button>
-    <button class="btn-submit" style="background:#222;color:#888;margin-top:4px;" onclick="tutupModal('modalSettingPin')">Batal</button>
-</div></div>
+<div class="modal-overlay" id="modalForm"><div class="modal-box"><h3 id="modalTitle">Input Instrumen</h3><input type="hidden" id="editId"><div class="modal-row"><div class="modal-col"><label>No WO (, + -) Opsional</label><input type="text" id="mWO" placeholder="118775, 118776" autocomplete="off"></div><div class="modal-col"><label>Tag No *</label><input type="text" id="mTag" placeholder="PT-001" autocomplete="off"></div></div><div class="wo-check-row"><input type="checkbox" id="mWOPrinted"><label for="mWOPrinted" style="color:var(--gold);">WO Sudah Dicetak</label></div><div class="modal-row"><div class="modal-col"><label>Dept / Plant</label><input type="text" id="mDeptPlant" placeholder="Produksi" autocomplete="off"></div><div class="modal-col"><label>Section</label><input type="text" id="mSection" placeholder="01" autocomplete="off"></div></div><div class="modal-row"><div class="modal-col"><label>Site</label><input type="text" id="mSite" placeholder="A1" autocomplete="off"></div><div class="modal-col"><label>Period</label><select id="mPeriod" onchange="hitungExpired()"><option value="6">6 Bulan</option><option value="12" selected>1 Tahun</option><option value="24">2 Tahun</option></select></div></div><div class="modal-row"><div class="modal-col"><label>Tgl Kalibrasi *</label><input type="text" id="mTglCal" placeholder="DD/MM/YYYY" onchange="hitungExpired()" autocomplete="off"></div><div class="modal-col"><label>Tgl Expired</label><input type="text" id="mTglExp" readonly style="color:var(--orange);font-weight:bold;" placeholder="Otomatis"></div></div><div class="modal-row"><div class="modal-col" style="flex:1"><label>Keterangan</label><input type="text" id="mKet" placeholder="Opsional" autocomplete="off"></div></div><button class="btn-submit" onclick="simpanData()">SIMPAN</button><button class="btn-submit" style="background:#222;color:#888;margin-top:4px;" onclick="tutupModal('modalForm')">BATAL</button></div></div>
+<div class="modal-overlay" id="modalImport"><div class="modal-box"><h3>[IMPORT] CSV</h3><div class="import-info-box"><b>Format:</b><br><span class="fmt">WO, WO Status, Tag No, Dept/Plant, Section, Site, Period, Tgl Kalibrasi, Tgl Expired, Keterangan</span></div><input type="file" id="fileCSV" accept=".csv" onchange="importCSV(event)"><button class="btn-submit" onclick="document.getElementById('fileCSV').click()">Pilih File CSV</button><button class="btn-submit" style="background:#222;color:#888;margin-top:4px;" onclick="tutupModal('modalImport')">Tutup</button></div></div>
+<div class="modal-overlay" id="modalCloud"><div class="modal-box" style="max-width:360px;"><h3>Cloud Options</h3><button class="btn-submit" style="background:#1a3a2a;color:var(--green);border:2px solid var(--green);" onclick="backupToCloud();tutupModal('modalCloud')" id="btnBackupCloud">Backup ke Cloud</button><button class="btn-submit" style="background:#1a2a3a;color:var(--blue);border:2px solid var(--blue);" onclick="restoreFromCloud()" id="btnRestoreCloud">Restore dari Cloud</button><button class="btn-submit" style="background:#3a1a1a;color:var(--red);border:2px solid var(--red);" onclick="clearCloudWithPin()" id="btnClearCloud">Clear Cloud</button><button class="btn-submit" style="background:#1a1a2a;color:var(--gold);border:2px solid var(--gold);" onclick="bukaSettingPinAdmin()" id="btnGantiPIN">Ganti PIN Engineer</button><button class="btn-submit" style="background:#1a1a2a;color:var(--gold);border:2px solid var(--gold);" onclick="bukaSettingPinViewer()" id="btnGantiPINViewer">Ganti PIN Viewer</button><button class="btn-submit" style="background:#222;color:#888;margin-top:4px;" onclick="tutupModal('modalCloud')">Tutup</button></div></div>
+<div class="modal-overlay" id="modalSettingPin"><div class="modal-box" style="max-width:340px;"><h3 id="settingPinTitle">Ganti PIN</h3><div id="rowOldPin" class="modal-row"><div class="modal-col"><label>PIN Lama</label><input type="password" id="oldPinInput" maxlength="6" placeholder="******" class="pin-input-large" autocomplete="off"></div></div><div class="modal-row"><div class="modal-col"><label id="labelNewPin">PIN Baru</label><input type="password" id="newPinInput" maxlength="6" placeholder="******" class="pin-input-large" autocomplete="off"></div></div><div class="modal-row"><div class="modal-col"><label>Konfirmasi</label><input type="password" id="confirmPinInput" maxlength="6" placeholder="******" class="pin-input-large" autocomplete="off"></div></div><p id="settingPinMsg" style="text-align:center;font-size:10px;margin:6px 0;"></p><button class="btn-submit" onclick="simpanSettingPin()">SIMPAN PIN</button><button class="btn-submit" style="background:#222;color:#888;margin-top:4px;" onclick="tutupModal('modalSettingPin')">Batal</button></div></div>
 
 <script>
 var GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwCg2CEQW6LH7I8bI9a04hZt3xqB9bFYL1lFQoSE38RpPP_gBe65vI97sroLtqhX36X/exec';
@@ -271,48 +246,20 @@ var ROLE_KEY = 'calTrack_role';
 var LOGIN_TIME_KEY = 'calTrack_loginTime';
 var AUTO_LOGOUT = 15 * 60 * 1000;
 var tableVisible = true, currentPage = 1, rowsPerPage = 20;
-var logoutInterval = null;
-var clockInterval = null;
-var deferredPrompt = null;
+var logoutInterval = null, clockInterval = null, deferredPrompt = null;
+var sortColumn = null, sortDirection = 'asc';
+var filterCheckboxes = { fWOSt:{}, fDeptPlant:{}, fSection:{}, fSite:{}, fPeriod:{}, fStatus:{}, fTglCal:{}, fTglExp:{} };
 if (!localStorage.getItem(PIN_ADMIN_KEY)) localStorage.setItem(PIN_ADMIN_KEY, '123456');
 if (!localStorage.getItem(PIN_VIEWER_KEY)) localStorage.setItem(PIN_VIEWER_KEY, '0000');
+
 function doLogin(){var p=document.getElementById('pinInput').value;if(p===localStorage.getItem(PIN_ADMIN_KEY))setSession('admin');else if(p===localStorage.getItem(PIN_VIEWER_KEY))setSession('viewer');else{document.getElementById('loginError').style.display='block';document.getElementById('pinInput').value='';document.getElementById('pinInput').focus();setTimeout(function(){document.getElementById('loginError').style.display='none'},2000)}}
-
-// PERBAIKAN: Cloud tetap muncul untuk Viewer, hanya tombol tertentu yang disembunyikan
-function setSession(r){
-    localStorage.setItem(ROLE_KEY,r);
-    localStorage.setItem(LOGIN_TIME_KEY,Date.now());
-    document.getElementById('loginScreen').style.display='none';
-    document.getElementById('mainApp').style.display='block';
-    var b=document.getElementById('userBadge');
-    b.textContent=r==='admin'?'ENGINEER':'VIEWER';
-    b.className='user-badge '+r;
-    
-    // Hanya admin yang bisa Tambah, Import, Reset
-    document.getElementById('btnTambah').style.display=r==='admin'?'inline-block':'none';
-    document.getElementById('btnImport').style.display=r==='admin'?'inline-block':'none';
-    document.getElementById('thAksi').style.display=r==='admin'?'':'none';
-    
-    // Tombol BACKUP & RESET hanya untuk admin
-    document.querySelectorAll('.print-actions .btn-outline, .print-actions .btn-red').forEach(function(el){
-        el.style.display=r==='admin'?'inline-block':'none';
-    });
-    
-    // CLOUD TETAP MUNCUL UNTUK SEMUA ROLE (admin & viewer)
-    document.querySelectorAll('.print-actions .btn-cyan').forEach(function(el){
-        el.style.display='inline-block';
-    });
-    
-    document.getElementById('pinInput').value='';
-    renderAll();
-    startLogoutTimer();
-}
-
+function setSession(r){localStorage.setItem(ROLE_KEY,r);localStorage.setItem(LOGIN_TIME_KEY,Date.now());document.getElementById('loginScreen').style.display='none';document.getElementById('mainApp').style.display='block';var b=document.getElementById('userBadge');b.textContent=r==='admin'?'ENGINEER':'VIEWER';b.className='user-badge '+r;document.getElementById('btnTambah').style.display=r==='admin'?'inline-block':'none';document.getElementById('btnImport').style.display=r==='admin'?'inline-block':'none';document.getElementById('thAksi').style.display=r==='admin'?'':'none';document.querySelectorAll('.print-actions .btn-outline, .print-actions .btn-red').forEach(function(el){el.style.display=r==='admin'?'inline-block':'none'});document.querySelectorAll('.print-actions .btn-cyan').forEach(function(el){el.style.display='inline-block'});document.getElementById('pinInput').value='';renderAll();startLogoutTimer()}
 function doLogout(){localStorage.removeItem(ROLE_KEY);localStorage.removeItem(LOGIN_TIME_KEY);document.getElementById('loginScreen').style.display='flex';document.getElementById('mainApp').style.display='none';document.getElementById('pinInput').focus();stopClock()}
 function checkSession(){var r=localStorage.getItem(ROLE_KEY),t=localStorage.getItem(LOGIN_TIME_KEY);if(!r||!t){doLogout();return}if(Date.now()-parseInt(t)>AUTO_LOGOUT){doLogout();showToast('Sesi habis.','warn');return}localStorage.setItem(LOGIN_TIME_KEY,Date.now());setSession(r)}
 function startLogoutTimer(){if(logoutInterval)clearInterval(logoutInterval);logoutInterval=setInterval(function(){var t=localStorage.getItem(LOGIN_TIME_KEY);if(t&&Date.now()-parseInt(t)>AUTO_LOGOUT){doLogout();showToast('Sesi habis.','warn')}},30000)}
-function startClock(){if(clockInterval)clearInterval(clockInterval);tickClock();clockInterval=setInterval(function(){tickClock()},1000)}
+function startClock(){if(clockInterval)clearInterval(clockInterval);tickClock();clockInterval=setInterval(tickClock,1000)}
 function stopClock(){if(clockInterval){clearInterval(clockInterval);clockInterval=null}}
+function tickClock(){var el=document.getElementById('hdrTime');if(el)el.textContent=new Date().toLocaleTimeString('id-ID',{hour12:false})}
 function getData(){var d=localStorage.getItem(STORAGE_KEY);return d?JSON.parse(d):[]}
 function saveData(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}
 function genID(){return Date.now().toString(36)+Math.random().toString(36).substring(2,8)}
@@ -324,28 +271,72 @@ function getStatus(e){if(!e)return{label:'-',class:''};var d=Math.ceil((new Date
 function isPrinted(i){return(i.woPrinted===true||i.woPrinted==='TRUE'||i.woPrinted===1||i.woPrinted==='1'||i.woStatus===true||i.woStatus==='TRUE'||i.woStatus===1||i.woStatus==='1')}
 function countWO(item){var c=0;if(item.wo&&String(item.wo).trim()){var wos=String(item.wo).split(/[,+\-]+/).filter(function(w){return w.trim()!==''});c=wos.length}if(c===0&&isPrinted(item))c=1;return c}
 function hitungExpired(){var c=parseDate(document.getElementById('mTglCal').value),p=parseInt(document.getElementById('mPeriod').value);if(!c||!p)return;var d=new Date(c);d.setMonth(d.getMonth()+p);document.getElementById('mTglExp').value=ymdToDMY(d.toISOString().split('T')[0])}
-var filterCheckboxes={fDeptPlant:{},fSection:{},fSite:{},fPeriod:{},fStatus:{},fWOSt:{},fTglCal:{},fTglExp:{}};
-function toggleFilterDropdown(id){var dd=document.getElementById(id+'-dropdown');document.querySelectorAll('.filter-dropdown').forEach(function(d){if(d!==dd)d.classList.remove('show')});dd.classList.toggle('show');if(dd.classList.contains('show'))buildFilterDropdown(id)}
-function buildFilterDropdown(id){var dd=document.getElementById(id+'-dropdown'),data=getData(),values=new Set();if(id==='fWOSt'){values.add('1');values.add('0')}else if(id==='fStatus'){data.forEach(function(i){var s=getStatus(i.tglExp);values.add(s.class==='status-ok'?'Valid':s.class==='status-warn'?'Approaching':'Expired')})}else if(id==='fTglCal'){data.forEach(function(i){if(i.tglCal)values.add(i.tglCal.substring(0,7))})}else if(id==='fTglExp'){data.forEach(function(i){if(i.tglExp)values.add(i.tglExp.substring(0,7))})}else{var key=id==='fDeptPlant'?'deptPlant':id==='fSection'?'section':id==='fSite'?'site':'period';data.forEach(function(i){if(i[key])values.add(String(i[key]))})}var html='',arr=Array.from(values).sort();if(id==='fTglCal'||id==='fTglExp')arr.reverse();arr.forEach(function(v){var checked=filterCheckboxes[id][v]?'checked':'';var label=v;if(id==='fPeriod')label=v+' Bln';if(id==='fTglCal'||id==='fTglExp'){var p=v.split('-');var bl=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];label=bl[parseInt(p[1])-1]+' '+p[0]}html+='<label><input type="checkbox" value="'+v+'" '+checked+' onchange="updateFilterCheckbox(\''+id+'\',\''+v+'\',this.checked)"> '+label+'</label>'});dd.innerHTML=html}
-function updateFilterCheckbox(id,value,checked){filterCheckboxes[id][value]=checked;renderAll()}
-function getFilteredData(){var data=getData(),f=data;var s=document.getElementById('fSearchTag').value.trim().toLowerCase();if(s){var m=f.filter(function(i){return i.tag.toLowerCase().includes(s)});document.getElementById('tagStatus').innerHTML=m.length>0?'ADA ('+m.length+')':'TIDAK';document.getElementById('tagStatus').style.color=m.length>0?'var(--green)':'var(--red)';f=m}else{document.getElementById('tagStatus').innerHTML=''}var t=document.getElementById('fTahun').value;if(t)f=f.filter(function(i){return i.tglExp&&i.tglExp.substring(0,4)===t});var bc=document.getElementById('fBulanCal').value;if(bc){f=f.filter(function(i){if(!i.tglCal)return false;var cal=new Date(i.tglCal),parts=bc.split('-');return cal.getFullYear()==parts[0]&&cal.getMonth()+1==parts[1]})}Object.keys(filterCheckboxes).forEach(function(key){var checked=Object.keys(filterCheckboxes[key]).filter(function(k){return filterCheckboxes[key][k]});if(checked.length>0){if(key==='fWOSt'){f=f.filter(function(i){return checked.indexOf(countWO(i)>0?'1':'0')!==-1})}else if(key==='fStatus'){f=f.filter(function(i){var st=getStatus(i.tglExp);var label=st.class==='status-ok'?'Valid':st.class==='status-warn'?'Approaching':'Expired';return checked.indexOf(label)!==-1})}else if(key==='fTglCal'){f=f.filter(function(i){return i.tglCal&&checked.indexOf(i.tglCal.substring(0,7))!==-1})}else if(key==='fTglExp'){f=f.filter(function(i){return i.tglExp&&checked.indexOf(i.tglExp.substring(0,7))!==-1})}else{var field=key==='fDeptPlant'?'deptPlant':key==='fSection'?'section':key==='fSite'?'site':'period';f=f.filter(function(i){return checked.indexOf(String(i[field]||''))!==-1})}}});f.sort(function(a,b){return new Date(a.tglExp)-new Date(b.tglExp)});return f}
+function filterByStatus(s){document.getElementById('fStatus').value=s;currentPage=1;renderAll()}
+function filterByPrinted(v){document.getElementById('fPrinted').value=v;currentPage=1;renderAll()}
+function resetPageAndRender(){currentPage=1;renderAll()}
+
+function toggleFilterDropdown(id){var dd=document.getElementById(id+'-dropdown');if(!dd)return;document.querySelectorAll('.filter-dropdown').forEach(function(d){if(d!==dd)d.classList.remove('show')});dd.classList.toggle('show');if(dd.classList.contains('show'))buildFilterDropdown(id)}
+function buildFilterDropdown(id){
+    var dd=document.getElementById(id+'-dropdown');if(!dd)return;
+    var data=getData(),values=new Set();
+    if(id==='fWOSt'){values.add('1');values.add('0')}
+    else if(id==='fStatus'){data.forEach(function(i){var s=getStatus(i.tglExp);values.add(s.class==='status-ok'?'Valid':s.class==='status-warn'?'Approaching':'Expired')})}
+    else if(id==='fTglCal'){data.forEach(function(i){if(i.tglCal)values.add(i.tglCal.substring(0,7))})}
+    else if(id==='fTglExp'){data.forEach(function(i){if(i.tglExp)values.add(i.tglExp.substring(0,7))})}
+    else{var key=id==='fDeptPlant'?'deptPlant':id==='fSection'?'section':id==='fSite'?'site':'period';data.forEach(function(i){if(i[key])values.add(String(i[key]))})}
+    var html='',arr=Array.from(values).sort();
+    if(id==='fTglCal'||id==='fTglExp')arr.reverse();
+    arr.forEach(function(v){var checked=filterCheckboxes[id]&&filterCheckboxes[id][v]?'checked':'';var label=v;if(id==='fWOSt')label=(v==='1'?'With WO':'Without WO');if(id==='fPeriod')label=v+' Bln';if(id==='fTglCal'||id==='fTglExp'){var p=v.split('-');var bl=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];label=bl[parseInt(p[1])-1]+' '+p[0]}html+='<label><input type="checkbox" value="'+v+'" '+checked+' onchange="updateFilterCheckbox(\''+id+'\',\''+v+'\',this.checked)"> '+label+'</label>'});
+    dd.innerHTML=html;
+}
+function updateFilterCheckbox(id,value,checked){if(!filterCheckboxes[id])filterCheckboxes[id]={};filterCheckboxes[id][value]=checked;renderAll()}
+
+function sortTable(col){if(sortColumn===col){sortDirection=sortDirection==='asc'?'desc':'asc'}else{sortColumn=col;sortDirection='asc'}document.querySelectorAll('th.sortable').forEach(function(th){th.classList.remove('sorted')});var thEl=document.getElementById('th'+col.charAt(0).toUpperCase()+col.slice(1));if(thEl)thEl.classList.add('sorted');currentPage=1;renderAll()}
+
+function getFilteredData(){
+    var data=getData(),f=data;
+    var s=document.getElementById('fSearchTag').value.trim().toLowerCase();
+    if(s){var m=f.filter(function(i){return i.tag.toLowerCase().includes(s)});document.getElementById('tagStatus').innerHTML=m.length>0?'ADA ('+m.length+')':'TIDAK';document.getElementById('tagStatus').style.color=m.length>0?'var(--green)':'var(--red)';f=m}else{document.getElementById('tagStatus').innerHTML=''}
+    var t=document.getElementById('fTahun').value;if(t)f=f.filter(function(i){return i.tglExp&&i.tglExp.substring(0,4)===t});
+    var bc=document.getElementById('fBulanCal').value;if(bc){f=f.filter(function(i){if(!i.tglCal)return false;var cal=new Date(i.tglCal),parts=bc.split('-');return cal.getFullYear()==parts[0]&&cal.getMonth()+1==parts[1]})}
+    var status=document.getElementById('fStatus').value;
+    if(status){f=f.filter(function(i){var st=getStatus(i.tglExp);if(status==='ok')return st.class==='status-ok';if(status==='warn')return st.class==='status-warn';if(status==='exp')return st.class==='status-exp';return true})}
+    var printed=document.getElementById('fPrinted').value;
+    if(printed==='yes')f=f.filter(function(i){return countWO(i)>0});
+    if(printed==='no')f=f.filter(function(i){return countWO(i)===0});
+    // Filter dropdown headers
+    Object.keys(filterCheckboxes).forEach(function(key){
+        var checked=Object.keys(filterCheckboxes[key]||{}).filter(function(k){return filterCheckboxes[key][k]});
+        if(checked.length>0){
+            if(key==='fWOSt'){f=f.filter(function(i){return checked.indexOf(countWO(i)>0?'1':'0')!==-1})}
+            else if(key==='fStatus'){f=f.filter(function(i){var st=getStatus(i.tglExp);var label=st.class==='status-ok'?'Valid':st.class==='status-warn'?'Approaching':'Expired';return checked.indexOf(label)!==-1})}
+            else if(key==='fTglCal'){f=f.filter(function(i){return i.tglCal&&checked.indexOf(i.tglCal.substring(0,7))!==-1})}
+            else if(key==='fTglExp'){f=f.filter(function(i){return i.tglExp&&checked.indexOf(i.tglExp.substring(0,7))!==-1})}
+            else{var field=key==='fDeptPlant'?'deptPlant':key==='fSection'?'section':key==='fSite'?'site':'period';f=f.filter(function(i){return checked.indexOf(String(i[field]||''))!==-1})}
+        }
+    });
+    if(sortColumn){f.sort(function(a,b){var va,vb;switch(sortColumn){case'tag':va=(a.tag||'').toLowerCase();vb=(b.tag||'').toLowerCase();break;case'dept':va=(a.deptPlant||'').toLowerCase();vb=(b.deptPlant||'').toLowerCase();break;case'section':va=(a.section||'').toLowerCase();vb=(b.section||'').toLowerCase();break;case'site':va=(a.site||'').toLowerCase();vb=(b.site||'').toLowerCase();break;case'period':va=a.period||0;vb=b.period||0;break;case'tglCal':va=a.tglCal||'';vb=b.tglCal||'';break;case'tglExp':va=a.tglExp||'';vb=b.tglExp||'';break;case'status':va=getStatus(a.tglExp).label;vb=getStatus(b.tglExp).label;break;default:return 0}if(va<vb)return sortDirection==='asc'?-1:1;if(va>vb)return sortDirection==='asc'?1:-1;return 0})}else{f.sort(function(a,b){return new Date(a.tglExp)-new Date(b.tglExp)})}
+    return f;
+}
+
 function renderAll(){renderTabel();updateDashboard();updateCharts();updateFilterOptions();updateBackupInfo();updateCloudStatus()}
 function changeRowsPerPage(){rowsPerPage=parseInt(document.getElementById('rowsPerPage').value);currentPage=1;renderAll()}
 function toggleTable(){tableVisible=!tableVisible;document.querySelector('.table-wrap').style.display=tableVisible?'block':'none';document.getElementById('btnToggleTable').textContent=tableVisible?'SEMBUNYIKAN TABEL':'TAMPILKAN TABEL'}
-function renderTabel(){var f=getFilteredData(),role=localStorage.getItem(ROLE_KEY),tb=document.getElementById('tabelBody');var total=f.length,totalPages=Math.ceil(total/rowsPerPage);if(currentPage>totalPages)currentPage=Math.max(1,totalPages);var start=(currentPage-1)*rowsPerPage,pageData=f.slice(start,start+rowsPerPage);if(total===0){tb.innerHTML='<tr><td colspan="13" class="empty-state">Tidak ada data.</td></tr>'}else{tb.innerHTML=pageData.map(function(i,idx){var st=getStatus(i.tglExp),woCount=countWO(i);var woDisplay=(i.wo&&String(i.wo).trim())?i.wo:(isPrinted(i)?'[CHECKED]':'-');var aksi=(role==='admin')?'<button class="btn-action" onclick="editData(\''+i.id+'\')">Edit</button><button class="btn-action del" onclick="hapusData(\''+i.id+'\')">Hapus</button>':'<span style="color:#555">-</span>';return '<tr><td>'+(start+idx+1)+'</td><td>'+woDisplay+'</td><td>'+woCount+'</td><td>'+i.tag+'</td><td>'+(i.deptPlant||'')+'</td><td>'+(i.section||'')+'</td><td>'+(i.site||'')+'</td><td>'+i.period+' Bln</td><td class="tgl-col">'+fmtTgl(i.tglCal)+'</td><td class="tgl-col">'+fmtTgl(i.tglExp)+'</td><td class="'+st.class+'">'+st.label+'</td><td>'+(i.ket||'')+'</td><td>'+aksi+'</td></tr>'}).join('')}if(role!=='admin')document.getElementById('thAksi').style.display='none';else document.getElementById('thAksi').style.display='';document.getElementById('tableInfo').textContent=total+' data | Hal '+currentPage+' dari '+totalPages;var pag=document.getElementById('pagination');pag.innerHTML='<button '+(currentPage===1?'disabled':'')+' onclick="goPage('+(currentPage-1)+')">Prev</button><span class="page-num">'+currentPage+'</span><button '+(currentPage===totalPages||totalPages===0?'disabled':'')+' onclick="goPage('+(currentPage+1)+')">Next</button>'}
+function renderTabel(){var f=getFilteredData(),role=localStorage.getItem(ROLE_KEY),tb=document.getElementById('tabelBody');var total=f.length,totalPages=Math.ceil(total/rowsPerPage);if(currentPage>totalPages)currentPage=Math.max(1,totalPages);var start=(currentPage-1)*rowsPerPage,pageData=f.slice(start,start+rowsPerPage);if(total===0){tb.innerHTML='<tr><td colspan="13" class="empty-state">Tidak ada data.</td></tr>'}else{tb.innerHTML=pageData.map(function(i,idx){var st=getStatus(i.tglExp),woCount=countWO(i);var woDisplay=(i.wo&&String(i.wo).trim())?escHTML(i.wo):(isPrinted(i)?'[CHECKED]':'-');var aksi=(role==='admin')?'<button class="btn-action" onclick="editData(\''+i.id+'\')">Edit</button><button class="btn-action del" onclick="hapusData(\''+i.id+'\')">Hapus</button>':'<span style="color:#555">-</span>';return '<tr><td>'+(start+idx+1)+'</td><td>'+woDisplay+'</td><td>'+woCount+'</td><td>'+escHTML(i.tag)+'</td><td>'+(i.deptPlant||'')+'</td><td>'+(i.section||'')+'</td><td>'+(i.site||'')+'</td><td>'+i.period+' Bln</td><td class="tgl-col">'+fmtTgl(i.tglCal)+'</td><td class="tgl-col">'+fmtTgl(i.tglExp)+'</td><td class="'+st.class+'">'+st.label+'</td><td>'+(i.ket||'')+'</td><td>'+aksi+'</td></tr>'}).join('')}if(role!=='admin')document.getElementById('thAksi').style.display='none';else document.getElementById('thAksi').style.display='';document.getElementById('tableInfo').textContent=total+' data | Hal '+currentPage+' dari '+totalPages;var pag=document.getElementById('pagination');pag.innerHTML='<button '+(currentPage===1?'disabled':'')+' onclick="goPage('+(currentPage-1)+')">Prev</button><span class="page-num">'+currentPage+'</span><button '+(currentPage===totalPages||totalPages===0?'disabled':'')+' onclick="goPage('+(currentPage+1)+')">Next</button>'}
 function goPage(p){currentPage=p;renderAll()}
-function updateDashboard(){var data=getData(),v=0,a=0,e=0,pr=0,un=0;data.forEach(function(i){var st=getStatus(i.tglExp);if(st.class==='status-ok')v++;else if(st.class==='status-warn')a++;else if(st.class==='status-exp')e++;pr+=countWO(i);if(countWO(i)===0)un++});document.getElementById('dashTotal').textContent=data.length;document.getElementById('dashValid').textContent=v;document.getElementById('dashApproach').textContent=a;document.getElementById('dashExpired').textContent=e;document.getElementById('dashPrinted').textContent=pr;document.getElementById('dashUnprinted').textContent=un}
+function updateDashboard(){var data=getData(),v=0,a=0,e=0,pr=0,un=0;data.forEach(function(i){var st=getStatus(i.tglExp);if(st.class==='status-ok')v++;else if(st.class==='status-warn')a++;else if(st.class==='status-exp')e++;if(countWO(i)>0)pr++;else un++});document.getElementById('dashTotal').textContent=data.length;document.getElementById('dashValid').textContent=v;document.getElementById('dashApproach').textContent=a;document.getElementById('dashExpired').textContent=e;document.getElementById('dashPrinted').textContent=pr;document.getElementById('dashUnprinted').textContent=un}
 function updateBackupInfo(){var data=getData();document.getElementById('infoJumlah').textContent=data.length;document.getElementById('infoStorage').textContent=(new Blob([JSON.stringify(data)]).size/1024).toFixed(1)+' KB';document.getElementById('infoBackup').textContent=localStorage.getItem(BACKUP_KEY)||'-';document.getElementById('infoCloud').textContent=(localStorage.getItem(CLOUD_BACKUP_KEY)||'-')+' (auto)'}
 var chartBulanInstance,chartWOInstance;
-function updateCharts(){if(typeof Chart==='undefined')return;if(chartBulanInstance){chartBulanInstance.destroy();chartBulanInstance=null}if(chartWOInstance){chartWOInstance.destroy();chartWOInstance=null}var data=getData();var bulan=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];var perBulan=Array(12).fill(0);data.forEach(function(i){if(i.tglExp){perBulan[new Date(i.tglExp).getMonth()]++}});var ctx1=document.getElementById('chartBulan');if(ctx1){chartBulanInstance=new Chart(ctx1,{type:'bar',data:{labels:bulan,datasets:[{data:perBulan,backgroundColor:'rgba(224,176,64,0.7)',borderColor:'#e0b040',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:true,scales:{y:{beginAtZero:true,ticks:{color:'#888'},grid:{color:'#252525'}},x:{ticks:{color:'#888'}}},plugins:{legend:{display:false}}}})}var printed=0,unprinted=0;data.forEach(function(i){printed+=countWO(i);if(countWO(i)===0)unprinted++});var ctx2=document.getElementById('chartWO');if(ctx2){chartWOInstance=new Chart(ctx2,{type:'doughnut',data:{labels:['With WO','No WO'],datasets:[{data:[printed,unprinted],backgroundColor:['#e0b040','#333'],borderColor:'#0d0d0d',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{color:'#888',font:{size:11}}}}}})}}
+function updateCharts(){if(typeof Chart==='undefined')return;if(chartBulanInstance){chartBulanInstance.destroy();chartBulanInstance=null}if(chartWOInstance){chartWOInstance.destroy();chartWOInstance=null}var data=getData();var bulan=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];var perBulan=Array(12).fill(0);data.forEach(function(i){if(i.tglExp){perBulan[new Date(i.tglExp).getMonth()]++}});var ctx1=document.getElementById('chartBulan');if(ctx1){chartBulanInstance=new Chart(ctx1,{type:'bar',data:{labels:bulan,datasets:[{data:perBulan,backgroundColor:'rgba(224,176,64,0.7)',borderColor:'#e0b040',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:true,scales:{y:{beginAtZero:true,ticks:{color:'#888'},grid:{color:'#252525'}},x:{ticks:{color:'#888'}}},plugins:{legend:{display:false}}}})}var printed=0,unprinted=0;data.forEach(function(i){if(countWO(i)>0)printed++;else unprinted++});var ctx2=document.getElementById('chartWO');if(ctx2){chartWOInstance=new Chart(ctx2,{type:'doughnut',data:{labels:['With WO','Without WO'],datasets:[{data:[printed,unprinted],backgroundColor:['#e0b040','#333'],borderColor:'#0d0d0d',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{color:'#888',font:{size:11}}}}}})}}
 function updateFilterOptions(){var data=getData(),blSet=new Set(),thSet=new Set();data.forEach(function(i){if(i.tglExp){var exp=new Date(i.tglExp);thSet.add(exp.getFullYear().toString())}if(i.tglCal){var cal=new Date(i.tglCal);thSet.add(cal.getFullYear().toString());blSet.add(cal.getFullYear()+'-'+String(cal.getMonth()+1).padStart(2,'0'))}});fillSelect('fBulanCal',blSet,'Bulan Kalibrasi',false,true);fillSelect('fTahun',thSet,'All Tahun')}
 function fillSelect(id,set,def,isP,isB){var s=document.getElementById(id);if(!s)return;var cur=s.value;s.innerHTML='<option value="">'+def+'</option>';var arr=Array.from(set).sort();if(id==='fTahun')arr.reverse();arr.forEach(function(v){var l=v;if(isB){var p=v.split('-');var bl=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];l=bl[parseInt(p[1])-1]+' '+p[0]}s.innerHTML+='<option value="'+v+'">'+l+'</option>'});s.value=cur}
-function resetFilter(){document.getElementById('fSearchTag').value='';document.getElementById('fBulanCal').value='';document.getElementById('fTahun').value='';document.getElementById('tagStatus').innerHTML='';filterCheckboxes={fDeptPlant:{},fSection:{},fSite:{},fPeriod:{},fStatus:{},fWOSt:{},fTglCal:{},fTglExp:{}};renderAll()}
+function resetFilter(){document.getElementById('fSearchTag').value='';document.getElementById('fStatus').value='';document.getElementById('fPrinted').value='';document.getElementById('fBulanCal').value='';document.getElementById('fTahun').value='';document.getElementById('tagStatus').innerHTML='';filterCheckboxes={fWOSt:{},fDeptPlant:{},fSection:{},fSite:{},fPeriod:{},fStatus:{},fTglCal:{},fTglExp:{}};sortColumn=null;document.querySelectorAll('th.sortable').forEach(function(th){th.classList.remove('sorted')});renderAll()}
 function updateCloudStatus(){var led=document.getElementById('cloudLed'),label=document.getElementById('cloudLabel');if(navigator.onLine){led.className='status-dot ok';label.textContent='CLOUD : Online'}else{led.className='status-dot err';label.textContent='CLOUD : Offline'}}
 window.addEventListener('online',updateCloudStatus);window.addEventListener('offline',updateCloudStatus);setInterval(updateCloudStatus,5000);
-function tickClock(){var el=document.getElementById('hdrTime');if(el)el.textContent=new Date().toLocaleTimeString('id-ID',{hour12:false})}
-function cleanData(items){return items.map(function(i){return{wo:i.wo||'',woPrinted:isPrinted(i),tag:i.tag||'',deptPlant:i.deptPlant||'',section:i.section||'',site:i.site||'',period:i.period||12,tglCal:i.tglCal||'',tglExp:i.tglExp||'',ket:i.ket||''}})}
-async function backupToCloud(){var data=getData();if(!data.length){alert('Tidak ada data!');return}showToast('Backup ke cloud...');try{var r=await fetch(GOOGLE_SHEETS_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'backup',instruments:cleanData(data),token:CLOUD_TOKEN})});var j=await r.json();showToast(j.success?'Backup '+j.count+' data!':'Gagal')}catch(e){showToast('Gagal! '+e.message)}}
+
+function cleanDataForCloud(items){return items.map(function(i){var p=(i.woPrinted===true||i.woPrinted==='TRUE'||i.woPrinted===1||i.woPrinted==='1'||i.woStatus===true||i.woStatus==='TRUE'||i.woStatus===1||i.woStatus==='1');return{wo:i.wo||'',woPrinted:p,tag:i.tag||'',deptPlant:i.deptPlant||'',section:i.section||'',site:i.site||'',period:i.period||12,tglCal:i.tglCal||'',tglExp:i.tglExp||'',ket:i.ket||''}})}
+async function autoBackupToCloud(){if(!navigator.onLine)return;var data=getData();try{await fetch(GOOGLE_SHEETS_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'backup',instruments:cleanDataForCloud(data),token:CLOUD_TOKEN})});localStorage.setItem(CLOUD_BACKUP_KEY,new Date().toISOString().split('T')[0]);updateBackupInfo()}catch(err){}}
+async function backupToCloud(){var data=getData();if(!data.length){alert('Tidak ada data!');return}showToast('Backup ke cloud...');try{var r=await fetch(GOOGLE_SHEETS_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'backup',instruments:cleanDataForCloud(data),token:CLOUD_TOKEN})});var j=await r.json();showToast(j.success?'Backup '+j.count+' data!':'Gagal')}catch(e){showToast('Gagal! '+e.message)}}
 async function restoreFromCloud(){if(!confirm('Restore? Data lokal akan ditimpa.'))return;showToast('Restore...');try{var r=await fetch(GOOGLE_SHEETS_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'restore',token:CLOUD_TOKEN})});var d=await r.json();if(!Array.isArray(d)||!d.length){alert('Tidak ada data!');return}var data=d.map(function(i){var p=(i.woPrinted===true||i.woPrinted==='TRUE'||i.woPrinted===1||i.woPrinted==='1'||i.woStatus===true||i.woStatus==='TRUE'||i.woStatus===1||i.woStatus==='1');var periodVal=String(i.period||i['PERIOD']||'12').replace(/Bln|BLN/gi,'').trim();return{id:genID(),wo:i.wo||i['WO']||'',woPrinted:p,woStatus:p,tag:i.tag||i['TAG NO']||'',deptPlant:i.deptPlant||i['DEPT/PLANT']||'',section:i.section||i['SECTION']||'',site:i.site||i['SITE']||'',period:parseInt(periodVal)||12,tglCal:parseDate(i.tglCal||i['TGL KAL']||''),tglExp:parseDate(i.tglExp||i['TGL EXP']||''),ket:i.ket||i['KET']||i['KETERANGAN']||''}});saveData(data);renderAll();updateBackupInfo();showToast('Restore '+data.length+' data')}catch(e){showToast('Gagal! '+e.message)}}
 function backupData(){if(!getData().length){alert('Kosong!');return}exportCSV();showToast('Backup CSV OK!')}
 async function clearCloudWithPin(){if(!confirm('HAPUS semua data di Cloud?'))return;try{await fetch(GOOGLE_SHEETS_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'clear',token:CLOUD_TOKEN})});showToast('Cloud cleared!')}catch(e){showToast('Gagal!')}}
@@ -355,74 +346,23 @@ function bukaSettingPinViewer(){settingMode='viewer';document.getElementById('se
 function simpanSettingPin(){var oldPin=document.getElementById('oldPinInput').value,newPin=document.getElementById('newPinInput').value,confirm=document.getElementById('confirmPinInput').value,msg=document.getElementById('settingPinMsg');if(settingMode==='admin'){if(oldPin!==localStorage.getItem(PIN_ADMIN_KEY)){msg.style.color='#ff3b30';msg.innerHTML='PIN lama salah!';return}if(!/^\d{6}$/.test(newPin)){msg.style.color='#ff3b30';msg.innerHTML='PIN harus 6 digit!';return}}else{if(!/^\d{4}$/.test(newPin)){msg.style.color='#ff3b30';msg.innerHTML='PIN harus 4 digit!';return}}if(newPin!==confirm){msg.style.color='#ff3b30';msg.innerHTML='Konfirmasi tidak cocok!';return}if(settingMode==='admin'){localStorage.setItem(PIN_ADMIN_KEY,newPin)}else{localStorage.setItem(PIN_VIEWER_KEY,newPin)}msg.style.color='#00ff41';msg.innerHTML='PIN berhasil diubah!';setTimeout(function(){tutupModal('modalSettingPin');showToast('PIN diubah!')},1000)}
 function bukaModalTambah(){if(localStorage.getItem(ROLE_KEY)!=='admin')return;document.getElementById('modalTitle').textContent='Input Instrumen';document.getElementById('editId').value='';['mWO','mTag','mDeptPlant','mSection','mSite','mKet'].forEach(function(id){document.getElementById(id).value=''});document.getElementById('mWOPrinted').checked=false;document.getElementById('mTglCal').value=ymdToDMY(new Date().toISOString().split('T')[0]);document.getElementById('mTglExp').value='';document.getElementById('modalForm').classList.add('active')}
 function editData(id){if(localStorage.getItem(ROLE_KEY)!=='admin')return;var i=getData().find(function(x){return x.id===id});if(!i)return;document.getElementById('modalTitle').textContent='Edit Instrumen';document.getElementById('editId').value=id;document.getElementById('mWO').value=i.wo||'';document.getElementById('mWOPrinted').checked=isPrinted(i);document.getElementById('mTag').value=i.tag;document.getElementById('mDeptPlant').value=i.deptPlant||'';document.getElementById('mSection').value=i.section||'';document.getElementById('mSite').value=i.site||'';document.getElementById('mPeriod').value=i.period;document.getElementById('mTglCal').value=ymdToDMY(i.tglCal);document.getElementById('mTglExp').value=ymdToDMY(i.tglExp);document.getElementById('mKet').value=i.ket||'';document.getElementById('modalForm').classList.add('active')}
-function simpanData(){if(localStorage.getItem(ROLE_KEY)!=='admin')return;var eid=document.getElementById('editId').value;var d={wo:document.getElementById('mWO').value.trim(),woPrinted:document.getElementById('mWOPrinted').checked,woStatus:document.getElementById('mWOPrinted').checked,tag:document.getElementById('mTag').value.trim(),deptPlant:document.getElementById('mDeptPlant').value.trim(),section:document.getElementById('mSection').value.trim(),site:document.getElementById('mSite').value.trim(),period:parseInt(document.getElementById('mPeriod').value),tglCal:parseDate(document.getElementById('mTglCal').value),tglExp:parseDate(document.getElementById('mTglExp').value),ket:document.getElementById('mKet').value.trim()};if(!d.tag||!d.tglCal){alert('Tag No & Tgl Kal wajib diisi!');return}var data=getData();if(eid){var idx=data.findIndex(function(i){return i.id===eid});if(idx!==-1)data[idx]=Object.assign({},data[idx],d)}else{data.push(Object.assign({id:genID()},d))}saveData(data);tutupModal('modalForm');renderAll();showToast(eid?'Updated!':'Added!')}
-function hapusData(id){if(localStorage.getItem(ROLE_KEY)!=='admin')return;if(!confirm('Hapus?'))return;saveData(getData().filter(function(i){return i.id!==id}));renderAll();showToast('Deleted!')}
+function simpanData(){if(localStorage.getItem(ROLE_KEY)!=='admin')return;var eid=document.getElementById('editId').value;var d={wo:document.getElementById('mWO').value.trim(),woPrinted:document.getElementById('mWOPrinted').checked,woStatus:document.getElementById('mWOPrinted').checked,tag:document.getElementById('mTag').value.trim(),deptPlant:document.getElementById('mDeptPlant').value.trim(),section:document.getElementById('mSection').value.trim(),site:document.getElementById('mSite').value.trim(),period:parseInt(document.getElementById('mPeriod').value),tglCal:parseDate(document.getElementById('mTglCal').value),tglExp:parseDate(document.getElementById('mTglExp').value),ket:document.getElementById('mKet').value.trim()};if(!d.tag||!d.tglCal){alert('Tag No & Tgl Kal wajib diisi!');return}var data=getData();if(data.find(function(i){return i.tag.toLowerCase()===d.tag.toLowerCase()&&i.id!==eid})){alert('Tag No SUDAH ADA! Tidak boleh duplikat!');return}if(eid){var idx=data.findIndex(function(i){return i.id===eid});if(idx!==-1)data[idx]=Object.assign({},data[idx],d)}else{data.push(Object.assign({id:genID()},d))}saveData(data);tutupModal('modalForm');renderAll();showToast(eid?'Updated!':'Added!');autoBackupToCloud()}
+function hapusData(id){if(localStorage.getItem(ROLE_KEY)!=='admin')return;if(!confirm('Hapus?'))return;saveData(getData().filter(function(i){return i.id!==id}));renderAll();showToast('Deleted!');autoBackupToCloud()}
 function resetAllSettings(){if(localStorage.getItem(ROLE_KEY)!=='admin')return;if(!confirm('RESET SEMUA?'))return;if(confirm('Download backup dulu?'))exportCSV();localStorage.removeItem(STORAGE_KEY);renderAll();showToast('Reset!')}
 function bukaModalImport(){if(localStorage.getItem(ROLE_KEY)!=='admin')return;document.getElementById('modalImport').classList.add('active')}
-
-// PERBAIKAN: Viewer bisa buka Cloud (hanya untuk Restore)
-function bukaModalCloud(){
-    var role = localStorage.getItem(ROLE_KEY);
-    document.getElementById('modalCloud').classList.add('active');
-    
-    // Sembunyikan tombol yang hanya untuk admin
-    var btnBackup = document.getElementById('btnBackupCloud');
-    var btnClear = document.getElementById('btnClearCloud');
-    var btnGantiPIN = document.getElementById('btnGantiPIN');
-    var btnGantiPINViewer = document.getElementById('btnGantiPINViewer');
-    var btnRestore = document.getElementById('btnRestoreCloud');
-    
-    if (role === 'admin') {
-        if (btnBackup) btnBackup.style.display = '';
-        if (btnClear) btnClear.style.display = '';
-        if (btnGantiPIN) btnGantiPIN.style.display = '';
-        if (btnGantiPINViewer) btnGantiPINViewer.style.display = '';
-    } else {
-        // Viewer hanya bisa RESTORE
-        if (btnBackup) btnBackup.style.display = 'none';
-        if (btnClear) btnClear.style.display = 'none';
-        if (btnGantiPIN) btnGantiPIN.style.display = 'none';
-        if (btnGantiPINViewer) btnGantiPINViewer.style.display = 'none';
-    }
-    // Tombol Restore selalu muncul untuk semua role
-    if (btnRestore) btnRestore.style.display = '';
-}
-
+function bukaModalCloud(){var role=localStorage.getItem(ROLE_KEY);document.getElementById('modalCloud').classList.add('active');var btnBackup=document.getElementById('btnBackupCloud'),btnClear=document.getElementById('btnClearCloud'),btnGantiPIN=document.getElementById('btnGantiPIN'),btnGantiPINViewer=document.getElementById('btnGantiPINViewer'),btnRestore=document.getElementById('btnRestoreCloud');if(role==='admin'){if(btnBackup)btnBackup.style.display='';if(btnClear)btnClear.style.display='';if(btnGantiPIN)btnGantiPIN.style.display='';if(btnGantiPINViewer)btnGantiPINViewer.style.display=''}else{if(btnBackup)btnBackup.style.display='none';if(btnClear)btnClear.style.display='none';if(btnGantiPIN)btnGantiPIN.style.display='none';if(btnGantiPINViewer)btnGantiPINViewer.style.display='none'}if(btnRestore)btnRestore.style.display=''}
 function tutupModal(id){var m=document.getElementById(id);if(m)m.classList.remove('active')}
-function importCSV(e){if(localStorage.getItem(ROLE_KEY)!=='admin')return;var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){var lines=ev.target.result.split('\n').filter(function(l){return l.trim()!==''});if(lines.length<2){alert('File kosong!');return}var delim=lines[0].includes(';')?';':',';var h=lines[0].split(delim).map(function(x){return x.replace(/"/g,'').toLowerCase().trim()});var idx={wo:-1,ws:-1,tag:-1,dp:-1,sec:-1,si:-1,per:-1,tc:-1,te:-1,ket:-1};h.forEach(function(x,i){if(x.includes('wo status'))idx.ws=i;if(x.includes('wo'))idx.wo=i;if(x.includes('tag'))idx.tag=i;if(x.includes('dept'))idx.dp=i;if(x.includes('section'))idx.sec=i;if(x.includes('site'))idx.si=i;if(x.includes('period'))idx.per=i;if(x.includes('kalibrasi')||x.includes('tgl cal'))idx.tc=i;if(x.includes('expired')||x.includes('tgl exp'))idx.te=i;if(x.includes('ket'))idx.ket=i});if(idx.tag===-1){alert('Kolom Tag No tidak ditemukan!');return}var data=getData(),imp=0;for(var i=1;i<lines.length;i++){var cols=lines[i].split(delim).map(function(x){return x.replace(/"/g,'').trim()});var tag=cols[idx.tag];if(!tag)continue;var tc=idx.tc!==-1?parseDate(cols[idx.tc]):'';if(!tc)continue;data.push({id:genID(),wo:idx.wo!==-1?cols[idx.wo]:'',woStatus:idx.ws!==-1&&cols[idx.ws]==='1',woPrinted:idx.ws!==-1&&cols[idx.ws]==='1',tag:tag,deptPlant:idx.dp!==-1?cols[idx.dp]:'',section:idx.sec!==-1?cols[idx.sec]:'',site:idx.si!==-1?cols[idx.si]:'',period:idx.per!==-1?parseInt(cols[idx.per])||12:12,tglCal:tc,tglExp:idx.te!==-1?parseDate(cols[idx.te]):'',ket:idx.ket!==-1?cols[idx.ket]:''});imp++}saveData(data);renderAll();alert('Import: '+imp+' data')};r.readAsText(f);e.target.value=''}
+function importCSV(e){if(localStorage.getItem(ROLE_KEY)!=='admin')return;var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){var lines=ev.target.result.split('\n').filter(function(l){return l.trim()!==''});if(lines.length<2){alert('File kosong!');return}var delim=lines[0].includes(';')?';':',';var h=lines[0].split(delim).map(function(x){return x.replace(/"/g,'').toLowerCase().trim()});var idx={wo:-1,ws:-1,tag:-1,dp:-1,sec:-1,si:-1,per:-1,tc:-1,te:-1,ket:-1};h.forEach(function(x,i){if(x.includes('wo status'))idx.ws=i;if(x.includes('wo'))idx.wo=i;if(x.includes('tag'))idx.tag=i;if(x.includes('dept'))idx.dp=i;if(x.includes('section'))idx.sec=i;if(x.includes('site'))idx.si=i;if(x.includes('period'))idx.per=i;if(x.includes('kalibrasi')||x.includes('tgl cal'))idx.tc=i;if(x.includes('expired')||x.includes('tgl exp'))idx.te=i;if(x.includes('ket'))idx.ket=i});if(idx.tag===-1){alert('Kolom Tag No tidak ditemukan!');return}var data=getData(),imp=0;for(var i=1;i<lines.length;i++){var cols=lines[i].split(delim).map(function(x){return x.replace(/"/g,'').trim()});var tag=cols[idx.tag];if(!tag)continue;var tc=idx.tc!==-1?parseDate(cols[idx.tc]):'';if(!tc)continue;data.push({id:genID(),wo:idx.wo!==-1?cols[idx.wo]:'',woStatus:idx.ws!==-1&&cols[idx.ws]==='1',woPrinted:idx.ws!==-1&&cols[idx.ws]==='1',tag:tag,deptPlant:idx.dp!==-1?cols[idx.dp]:'',section:idx.sec!==-1?cols[idx.sec]:'',site:idx.si!==-1?cols[idx.si]:'',period:idx.per!==-1?parseInt(cols[idx.per])||12:12,tglCal:tc,tglExp:idx.te!==-1?parseDate(cols[idx.te]):'',ket:idx.ket!==-1?cols[idx.ket]:''});imp++}saveData(data);renderAll();alert('Import: '+imp+' data');autoBackupToCloud()};r.readAsText(f);e.target.value=''}
 function printByDate(){var d=parseDate(document.getElementById('printDari').value),s=parseDate(document.getElementById('printSampai').value);if(!d||!s){alert('Isi tanggal! (DD/MM/YYYY)');return}var data=getData().filter(function(i){return i.tglCal>=d&&i.tglCal<=s});if(!data.length){alert('Tidak ada data.');return}doPrint(data,'Laporan '+fmtTgl(d)+' - '+fmtTgl(s))}
 function printAll(){var data=getData();if(!data.length){alert('Tidak ada data.');return}doPrint(data,'Laporan Kalibrasi')}
 function doPrint(data,title){var rows='';data.forEach(function(i,idx){var st=getStatus(i.tglExp);rows+='<tr><td>'+(idx+1)+'</td><td>'+(i.wo||'-')+'</td><td>'+i.tag+'</td><td>'+i.deptPlant+'</td><td>'+i.section+'</td><td>'+i.site+'</td><td>'+i.period+' Bln</td><td>'+fmtTgl(i.tglCal)+'</td><td>'+fmtTgl(i.tglExp)+'</td><td>'+st.label+'</td><td>'+(i.ket||'')+'</td></tr>'});var w=window.open('','_blank');w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+title+'</title><style>@page{size:A4 landscape;margin:5mm}body{font-family:Arial;font-size:9px;width:100%}table{width:100%;border-collapse:collapse}th,td{border:1px solid #333;padding:3px;text-align:center}th{background:#ddd}</style></head><body><h3 style="text-align:center;margin:4px 0">'+title+'</h3><table><tr><th>No</th><th>WO</th><th>Tag</th><th>Dept</th><th>Sec</th><th>Site</th><th>Period</th><th>Tgl Kal</th><th>Tgl Exp</th><th>Status</th><th>Ket</th></tr>'+rows+'</table></body></html>');w.document.close();setTimeout(function(){w.print()},500)}
 function exportCSV(){var data=getData(),csv='WO,WO Status,Tag No,Dept/Plant,Section,Site,Period,Tgl Kalibrasi,Tgl Expired,Keterangan\n';data.forEach(function(i){csv+=(i.wo||'')+','+(isPrinted(i)?'1':'0')+','+i.tag+','+i.deptPlant+','+i.section+','+i.site+','+i.period+','+i.tglCal+','+i.tglExp+','+(i.ket||'')+'\n'});var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv]));a.download='backup.csv';a.click()}
 function showToast(m,type){var t=document.createElement('div');t.className='toast'+(type==='warn'?' warn':'');t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transition='opacity 0.3s';setTimeout(function(){if(t.parentNode)t.remove()},300)},2000)}
 
-// ==================== PWA INSTALL ====================
-window.addEventListener('beforeinstallprompt', function(e) {
-    console.log('[PWA] beforeinstallprompt fired!');
-    e.preventDefault();
-    deferredPrompt = e;
-    if (document.getElementById('installPWA')) return;
-    var btn = document.createElement('button');
-    btn.id = 'installPWA';
-    btn.innerHTML = '&#128187; INSTALL APP';
-    btn.style.cssText = 'position:fixed;bottom:24px;right:24px;padding:14px 22px;border:none;border-radius:14px;background:#e0b040;color:#000;font-weight:bold;z-index:99999;box-shadow:0 4px 20px rgba(224,176,64,0.5);cursor:pointer;font-size:13px;letter-spacing:1px;font-family:Segoe UI,sans-serif;transition:all 0.3s ease;animation:fadeInUp 0.5s ease;';
-    btn.onmouseover = function(){btn.style.background='#c09020';btn.style.transform='scale(1.05)';};
-    btn.onmouseout = function(){btn.style.background='#e0b040';btn.style.transform='scale(1)';};
-    document.body.appendChild(btn);
-    btn.addEventListener('click', async function(){btn.remove();deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;});
-});
-window.addEventListener('appinstalled', function(){var btn=document.getElementById('installPWA');if(btn)btn.remove();deferredPrompt=null;});
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;if(document.getElementById('installPWA'))return;var btn=document.createElement('button');btn.id='installPWA';btn.innerHTML='&#128187; INSTALL APP';btn.style.cssText='position:fixed;bottom:24px;right:24px;padding:14px 22px;border:none;border-radius:14px;background:#e0b040;color:#000;font-weight:bold;z-index:99999;box-shadow:0 4px 20px rgba(224,176,64,0.5);cursor:pointer;font-size:13px;letter-spacing:1px;font-family:Segoe UI,sans-serif;transition:all 0.3s ease;animation:fadeInUp 0.5s ease;';btn.onmouseover=function(){btn.style.background='#c09020';btn.style.transform='scale(1.05)';};btn.onmouseout=function(){btn.style.background='#e0b040';btn.style.transform='scale(1)';};document.body.appendChild(btn);btn.addEventListener('click',async function(){btn.remove();deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;});});
+window.addEventListener('appinstalled',function(){var btn=document.getElementById('installPWA');if(btn)btn.remove();deferredPrompt=null;});
 
-function init(){
-    startClock();
-    checkSession();
-    document.getElementById('pinInput').addEventListener('keypress',function(e){if(e.key==='Enter')doLogin()});
-    document.getElementById('mTglCal').value=ymdToDMY(new Date().toISOString().split('T')[0]);
-    document.querySelectorAll('#modalForm input:not([readonly]), #modalForm select').forEach(function(inp,idx,arr){inp.addEventListener('keypress',function(e){if(e.key==='Enter'){e.preventDefault();if(idx===arr.length-1||inp.id==='mKet')simpanData();else arr[idx+1].focus()}})});
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'){var m=document.querySelector('.modal-overlay.active');if(m)tutupModal(m.id)}});
-    document.addEventListener('click',function(e){if(!e.target.closest('.filter-btn')&&!e.target.closest('.filter-dropdown')){document.querySelectorAll('.filter-dropdown').forEach(function(d){d.classList.remove('show')})}});
-    if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').then(function(registration){console.log('[PWA] SW registered:',registration.scope)}).catch(function(error){console.warn('[PWA] SW failed:',error.message)})})}
-}
+function init(){startClock();checkSession();document.getElementById('pinInput').addEventListener('keypress',function(e){if(e.key==='Enter')doLogin()});document.getElementById('mTglCal').value=ymdToDMY(new Date().toISOString().split('T')[0]);document.querySelectorAll('#modalForm input:not([readonly]), #modalForm select').forEach(function(inp,idx,arr){inp.addEventListener('keypress',function(e){if(e.key==='Enter'){e.preventDefault();if(idx===arr.length-1||inp.id==='mKet')simpanData();else arr[idx+1].focus()}})});document.addEventListener('keydown',function(e){if(e.key==='Escape'){var m=document.querySelector('.modal-overlay.active');if(m)tutupModal(m.id)}});document.addEventListener('click',function(e){if(!e.target.closest('.filter-btn')&&!e.target.closest('.filter-dropdown')){document.querySelectorAll('.filter-dropdown').forEach(function(d){d.classList.remove('show')})}});if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').then(function(registration){console.log('[PWA] SW registered:',registration.scope)}).catch(function(error){console.warn('[PWA] SW failed:',error.message)})})}document.querySelectorAll('input').forEach(function(inp){inp.setAttribute('autocomplete','off')})}
 ['modalForm','modalImport','modalCloud','modalSettingPin'].forEach(function(id){document.getElementById(id).addEventListener('click',function(e){if(e.target===this)tutupModal(id)})});
 init();
 </script>
