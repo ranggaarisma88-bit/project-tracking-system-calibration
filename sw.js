@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cal-track-v5';
+const CACHE_NAME = 'cal-track-v6';
 const ASSETS = [
   './',
   './index.html',
