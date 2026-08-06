@@ -22,9 +22,10 @@
         *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
         body{background:var(--bg);color:var(--text);min-height:100vh}
         #loginScreen{display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px;background:radial-gradient(ellipse at center,#1a1a0a 0%,#0a0a0a 70%)}
-        .login-box{background:rgba(20,20,20,0.95);border:1px solid rgba(224,176,64,0.3);border-radius:20px;padding:40px 30px;width:100%;max-width:380px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5);animation:fadeInUp 0.6s ease}
+        .login-box{background:rgba(20,20,20,0.95);backdrop-filter:blur(10px);border:1px solid rgba(224,176,64,0.3);border-radius:20px;padding:40px 30px;width:100%;max-width:380px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5);animation:fadeInUp 0.8s cubic-bezier(0.175,0.885,0.32,1.275)}
         @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-        .login-box .logo-icon{font-size:44px;margin-bottom:8px}
+        .login-box .logo-icon{font-size:44px;margin-bottom:8px;animation:lightning 2s infinite}
+        @keyframes lightning{0%,100%{opacity:0.4;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
         .login-box h2{color:var(--gold);font-size:18px;letter-spacing:3px;font-weight:900;margin-bottom:4px}
         .login-box .sub{color:#666;font-size:10px;letter-spacing:3px;margin-bottom:22px}
         .login-box input{width:100%;padding:14px;border-radius:12px;font-size:20px;text-align:center;background:var(--input);color:#fff;border:2px solid var(--border);outline:none;letter-spacing:14px;font-family:'Courier New',monospace;margin-bottom:14px;transition:all 0.3s}
@@ -46,7 +47,7 @@
         .status-dot.ok{background:#00e676;box-shadow:0 0 6px rgba(0,230,118,0.5)}
         .status-dot.err{background:#ef5350;box-shadow:0 0 6px rgba(239,83,80,0.5);animation:dotPulse 0.6s ease-in-out infinite}
         @keyframes dotPulse{0%,100%{opacity:1}50%{opacity:0.3}}
-        .header-time{font-family:'Share Tech Mono',monospace;font-size:12px;color:#c0dfff;letter-spacing:2px;margin-left:6px}
+        .header-time{font-family:'Share Tech Mono',monospace;font-size:14px;color:#f0e68c;letter-spacing:3px;text-shadow:0 0 10px rgba(224,176,64,0.6),0 0 20px rgba(224,176,64,0.3);border-bottom:2px solid var(--gold);padding-bottom:2px;margin-left:6px}
         .user-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;margin-bottom:2px}
         .user-badge{font-size:9px;padding:4px 10px;border-radius:16px;font-weight:700;letter-spacing:1px}
         .user-badge.admin{background:var(--gold);color:#000}
@@ -54,9 +55,9 @@
         .btn-logout{font-size:9px;padding:4px 10px;border-radius:16px;background:transparent;color:var(--red);border:1px solid var(--red);cursor:pointer;font-weight:700;letter-spacing:1px;transition:all 0.3s}
         .btn-logout:hover{background:var(--red);color:#fff}
         .dash-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:10px}
-        .dash-card{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:14px 8px;text-align:center;transition:all 0.2s}
+        .dash-card{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:14px 8px;text-align:center;transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275)}
         .dash-card.clickable{cursor:pointer}
-        .dash-card.clickable:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.4),0 0 15px rgba(224,176,64,0.1)}
+        .dash-card.clickable:hover{border-color:var(--gold);transform:translateY(-5px) scale(1.02);box-shadow:0 10px 30px rgba(0,0,0,0.5),0 0 20px rgba(224,176,64,0.2)}
         .dash-card .val{font-size:28px;font-weight:900}
         .dash-card .lbl{font-size:8px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;color:var(--muted);font-weight:700}
         .dash-card.total{border-color:rgba(0,212,255,0.4)!important;box-shadow:0 0 20px rgba(0,212,255,0.15),inset 0 0 20px rgba(0,212,255,0.05)!important;cursor:default!important}
@@ -66,6 +67,12 @@
         .dash-card.exp .val{color:var(--red);animation:blink 1s infinite}
         .dash-card.printed .val{color:var(--gold)}.dash-card.unprinted .val{color:#aaa}
         @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+        .wo-progress-box{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:10px 14px;margin-bottom:10px}
+        .wo-progress-header{display:flex;justify-content:space-between;margin-bottom:4px}
+        .wo-progress-header span:first-child{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:700}
+        .wo-progress-header span:last-child{font-size:9px;color:var(--gold);font-weight:900}
+        .wo-progress-bar{background:#1a1a1a;border-radius:6px;height:8px;overflow:hidden}
+        .wo-progress-fill{background:linear-gradient(90deg,var(--gold),#f0c850);height:100%;width:0%;transition:width 0.5s ease;border-radius:6px}
         .chart-box{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:14px}
         .chart-box h4{font-size:10px;color:var(--gold);text-align:center;margin-bottom:6px;letter-spacing:1px}
         .backup-info{display:flex;gap:8px;align-items:center;justify-content:center;padding:4px 0 8px;font-size:9px;color:var(--muted)}
@@ -113,9 +120,13 @@
         th .filter-dropdown label{display:flex;align-items:center;gap:6px;padding:4px 0;font-size:10px;color:#ccc;cursor:pointer;white-space:nowrap}
         th .filter-dropdown label:hover{color:var(--gold)}
         th .filter-dropdown input[type="checkbox"]{width:13px;height:13px;accent-color:var(--gold);cursor:pointer}
-        td{padding:10px 5px;border-bottom:1px solid #1a1a1a;text-align:center;color:#ccc}
+        td{padding:10px 5px;border-bottom:1px solid #1a1a1a;text-align:center;color:#ccc;transition:all 0.3s}
         td.tgl-col{font-family:'Consolas','Courier New',monospace;white-space:nowrap;letter-spacing:0.5px;font-size:10px}
         tr:hover td{background:var(--hover)}
+        tr.status-warn-row td{animation:warnPulse 2s infinite}
+        tr.status-exp-row td{animation:expPulse 1s infinite}
+        @keyframes warnPulse{0%,100%{background:transparent}50%{background:rgba(255,149,0,0.08)}}
+        @keyframes expPulse{0%,100%{background:transparent}50%{background:rgba(255,59,48,0.1)}}
         .status-ok{color:var(--green);font-weight:700}.status-warn{color:var(--orange);font-weight:700;animation:blink 1s infinite}.status-exp{color:var(--red);font-weight:700}
         .wo-filled{color:var(--gold);font-weight:700}.wo-empty{color:#666}
         .btn-action{padding:4px 7px;border-radius:4px;font-size:9px;cursor:pointer;border:2px solid #444;background:#1a1a1a;color:#bbb;margin:0 1px;font-weight:600;transition:all 0.2s;white-space:nowrap}
@@ -146,7 +157,7 @@
         .toast{position:fixed;top:20px;right:20px;background:#1a3a1a;border:1px solid var(--green);color:var(--green);padding:10px 16px;border-radius:8px;font-weight:700;font-size:11px;z-index:99999;animation:slideIn 0.3s ease}
         .toast.warn{background:#1a1a0a;border-color:var(--orange);color:var(--orange)}
         @keyframes slideIn{from{opacity:0;transform:translateX(100px)}to{opacity:1;transform:translateX(0)}}
-        @media print{@page{size:A4 landscape;margin:5mm}body{background:#fff!important;color:#000!important}.top-bar,.toolbar,.filter-top,.print-toolbar,.table-controls,.pagination,.backup-info,.chart-box,.dash-grid,.header-status,.user-row,.btn-action,.toast,#chartGrid{display:none!important}.table-wrap{overflow:visible!important;border:1px solid #000!important}table{min-width:0!important;font-size:8px!important}th,td{border:1px solid #000!important;padding:2px!important;color:#000!important}th{background:#ddd!important;text-shadow:none!important;color:#000!important}}
+        @media print{@page{size:A4 landscape;margin:5mm}body{background:#fff!important;color:#000!important}.top-bar,.toolbar,.filter-top,.print-toolbar,.table-controls,.pagination,.backup-info,.chart-box,.dash-grid,.wo-progress-box,.header-status,.user-row,.btn-action,.toast,#chartGrid{display:none!important}.table-wrap{overflow:visible!important;border:1px solid #000!important}table{min-width:0!important;font-size:8px!important}th,td{border:1px solid #000!important;padding:2px!important;color:#000!important}th{background:#ddd!important;text-shadow:none!important;color:#000!important}}
         #fileCSV{display:none}
         .pin-input-large{font-size:18px!important;letter-spacing:10px!important;text-align:center!important;font-family:'Courier New',monospace!important}
         @media(max-width:768px){.dash-grid{grid-template-columns:repeat(3,1fr)}.modal-row{flex-direction:column}.filter-top{flex-direction:column}.filter-top input,.filter-top select{width:100%;min-width:0}.print-row{flex-direction:column}.print-actions{flex-direction:column}table{font-size:9px}}
@@ -181,6 +192,15 @@
         <div class="dash-card exp clickable" onclick="filterByStatus('exp')"><div class="val" id="dashExpired">0</div><div class="lbl">Expired</div></div>
         <div class="dash-card printed clickable" onclick="filterByPrinted('yes')"><div class="val" id="dashPrinted">0</div><div class="lbl">With WO</div></div>
         <div class="dash-card unprinted clickable" onclick="filterByPrinted('no')"><div class="val" id="dashUnprinted">0</div><div class="lbl">Without WO</div></div>
+    </div>
+    <div class="wo-progress-box">
+        <div class="wo-progress-header">
+            <span>WO Completion</span>
+            <span id="woPercent">0%</span>
+        </div>
+        <div class="wo-progress-bar">
+            <div class="wo-progress-fill" id="woBar"></div>
+        </div>
     </div>
     <div style="display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:10px;">
         <div class="chart-box"><h4>Calibration by Month</h4><canvas id="chartBulan" style="max-height:200px;"></canvas></div>
@@ -299,9 +319,9 @@ function renderAllSearch(){renderTabel();updateDashboard();updateFilterOptions()
 function updateFilterBadge(){var filtered=getFilteredData();var total=getData().length;var el=document.getElementById('filterCountBadge');if(el){if(filtered.length===total){el.style.display='none'}else{el.style.display='inline-block';el.innerHTML='Filter: '+filtered.length+' / '+total+' <span onclick="resetFilter()" style="cursor:pointer;margin-left:8px;background:#000;color:var(--gold);padding:2px 8px;border-radius:4px;font-size:9px">&#10005; Reset</span>'}}}
 function changeRowsPerPage(){rowsPerPage=parseInt(document.getElementById('rowsPerPage').value);currentPage=1;renderAll()}
 function toggleTable(){tableVisible=!tableVisible;document.querySelector('.table-wrap').style.display=tableVisible?'block':'none';document.getElementById('btnToggleTable').textContent=tableVisible?'Hide Table':'Show Table'}
-function renderTabel(){var f=getFilteredData(),role=localStorage.getItem(ROLE_KEY),tb=document.getElementById('tabelBody');var total=f.length,totalPages=Math.ceil(total/rowsPerPage);if(currentPage>totalPages)currentPage=Math.max(1,totalPages);var start=(currentPage-1)*rowsPerPage,pageData=f.slice(start,start+rowsPerPage);if(total===0){tb.innerHTML='<tr><td colspan="13" class="empty-state">No data available.</td></tr>'}else{tb.innerHTML=pageData.map(function(i,idx){var st=getStatus(i.tglExp),woCount=countWO(i);var woDisplay=(i.wo&&String(i.wo).trim())?escHTML(i.wo):(isPrinted(i)?'[CHECKED]':'-');var aksi=(role==='admin')?'<button class="btn-action" onclick="editData(\''+i.id+'\')">Edit</button><button class="btn-action del" onclick="hapusData(\''+i.id+'\')">Delete</button>':'<span style="color:#555">-</span>';return '<tr><td>'+(start+idx+1)+'</td><td>'+woDisplay+'</td><td><span class="'+(woCount===0?'wo-count-zero':'wo-count-filled')+'">'+woCount+'</span></td><td>'+escHTML(i.tag)+'</td><td>'+escHTML(i.deptPlant||'')+'</td><td>'+escHTML(i.section||'')+'</td><td>'+escHTML(i.site||'')+'</td><td>'+i.period+' Mo</td><td class="tgl-col">'+fmtTgl(i.tglCal)+'</td><td class="tgl-col">'+fmtTgl(i.tglExp)+'</td><td class="'+st.class+'">'+st.label+'</td><td>'+escHTML(i.ket||'')+'</td><td>'+aksi+'</td></tr>'}).join('')}if(role!=='admin')document.getElementById('thAksi').style.display='none';else document.getElementById('thAksi').style.display='';document.getElementById('tableInfo').textContent=total+' data | Page '+currentPage+' of '+totalPages;var pag=document.getElementById('pagination');pag.innerHTML='<button '+(currentPage===1?'disabled':'')+' onclick="goPage('+(currentPage-1)+')">Prev</button><span class="page-num">'+currentPage+'</span><button '+(currentPage===totalPages||totalPages===0?'disabled':'')+' onclick="goPage('+(currentPage+1)+')">Next</button>'}
+function renderTabel(){var f=getFilteredData(),role=localStorage.getItem(ROLE_KEY),tb=document.getElementById('tabelBody');var total=f.length,totalPages=Math.ceil(total/rowsPerPage);if(currentPage>totalPages)currentPage=Math.max(1,totalPages);var start=(currentPage-1)*rowsPerPage,pageData=f.slice(start,start+rowsPerPage);if(total===0){tb.innerHTML='<tr><td colspan="13" class="empty-state">No data available.</td></tr>'}else{tb.innerHTML=pageData.map(function(i,idx){var st=getStatus(i.tglExp),woCount=countWO(i);var woDisplay=(i.wo&&String(i.wo).trim())?escHTML(i.wo):(isPrinted(i)?'[CHECKED]':'-');var rowClass='';if(st.class==='status-warn')rowClass='status-warn-row';if(st.class==='status-exp')rowClass='status-exp-row';var aksi=(role==='admin')?'<button class="btn-action" onclick="editData(\''+i.id+'\')">Edit</button><button class="btn-action del" onclick="hapusData(\''+i.id+'\')">Delete</button>':'<span style="color:#555">-</span>';return '<tr class="'+rowClass+'"><td>'+(start+idx+1)+'</td><td>'+woDisplay+'</td><td><span class="'+(woCount===0?'wo-count-zero':'wo-count-filled')+'">'+woCount+'</span></td><td>'+escHTML(i.tag)+'</td><td>'+escHTML(i.deptPlant||'')+'</td><td>'+escHTML(i.section||'')+'</td><td>'+escHTML(i.site||'')+'</td><td>'+i.period+' Mo</td><td class="tgl-col">'+fmtTgl(i.tglCal)+'</td><td class="tgl-col">'+fmtTgl(i.tglExp)+'</td><td class="'+st.class+'">'+st.label+'</td><td>'+escHTML(i.ket||'')+'</td><td>'+aksi+'</td></tr>'}).join('')}if(role!=='admin')document.getElementById('thAksi').style.display='none';else document.getElementById('thAksi').style.display='';document.getElementById('tableInfo').textContent=total+' data | Page '+currentPage+' of '+totalPages;var pag=document.getElementById('pagination');pag.innerHTML='<button '+(currentPage===1?'disabled':'')+' onclick="goPage('+(currentPage-1)+')">Prev</button><span class="page-num">'+currentPage+'</span><button '+(currentPage===totalPages||totalPages===0?'disabled':'')+' onclick="goPage('+(currentPage+1)+')">Next</button>'}
 function goPage(p){currentPage=p;renderAll()}
-function updateDashboard(){var data=getData(),v=0,a=0,e=0,pr=0,un=0;data.forEach(function(i){var st=getStatus(i.tglExp);if(st.class==='status-ok')v++;else if(st.class==='status-warn')a++;else if(st.class==='status-exp')e++;if(countWO(i)>0)pr++;else un++});document.getElementById('dashTotal').textContent=data.length;document.getElementById('dashValid').textContent=v;document.getElementById('dashApproach').textContent=a;document.getElementById('dashExpired').textContent=e;document.getElementById('dashPrinted').textContent=pr;document.getElementById('dashUnprinted').textContent=un}
+function updateDashboard(){var data=getData(),v=0,a=0,e=0,pr=0,un=0;data.forEach(function(i){var st=getStatus(i.tglExp);if(st.class==='status-ok')v++;else if(st.class==='status-warn')a++;else if(st.class==='status-exp')e++;if(countWO(i)>0)pr++;else un++});document.getElementById('dashTotal').textContent=data.length;document.getElementById('dashValid').textContent=v;document.getElementById('dashApproach').textContent=a;document.getElementById('dashExpired').textContent=e;document.getElementById('dashPrinted').textContent=pr;document.getElementById('dashUnprinted').textContent=un;var woPercent=data.length>0?Math.round((pr/data.length)*100):0;var bar=document.getElementById('woBar');var txt=document.getElementById('woPercent');if(bar)bar.style.width=woPercent+'%';if(txt)txt.textContent=woPercent+'%'}
 function updateBackupInfo(){var data=getData();document.getElementById('infoJumlah').textContent=data.length;var storageKB=(new Blob([JSON.stringify(data)]).size/1024).toFixed(1);document.getElementById('infoStorage').textContent=storageKB+' KB';if(parseFloat(storageKB)>4000){document.getElementById('infoStorage').style.color='var(--red)';showToast('Storage almost full! Backup & clean old data.','warn')}else{document.getElementById('infoStorage').style.color=''}document.getElementById('infoBackup').textContent=localStorage.getItem(BACKUP_KEY)||'-';document.getElementById('infoCloud').textContent=(localStorage.getItem(CLOUD_BACKUP_KEY)||'-')+' (auto)'}
 var chartBulanInstance,chartWOInstance;
 function updateCharts(){if(typeof Chart==='undefined')return;if(chartBulanInstance){chartBulanInstance.destroy();chartBulanInstance=null}if(chartWOInstance){chartWOInstance.destroy();chartWOInstance=null}var data=getData();var bulan=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];var perBulan=Array(12).fill(0);data.forEach(function(i){if(i.tglExp){perBulan[new Date(i.tglExp).getMonth()]++}});var ctx1=document.getElementById('chartBulan');if(ctx1){chartBulanInstance=new Chart(ctx1,{type:'bar',data:{labels:bulan,datasets:[{data:perBulan,backgroundColor:'rgba(224,176,64,0.7)',borderColor:'#e0b040',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:true,scales:{y:{beginAtZero:true,ticks:{color:'#888'},grid:{color:'#252525'}},x:{ticks:{color:'#888'}}},plugins:{legend:{display:false}}}})}var printed=0,unprinted=0;data.forEach(function(i){if(countWO(i)>0)printed++;else unprinted++});var ctx2=document.getElementById('chartWO');if(ctx2){chartWOInstance=new Chart(ctx2,{type:'doughnut',data:{labels:['With WO','Without WO'],datasets:[{data:[printed,unprinted],backgroundColor:['#e0b040','#333'],borderColor:'#0d0d0d',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{color:'#888',font:{size:11}}}}}})}}
