@@ -55,24 +55,34 @@
         .btn-logout{font-size:9px;padding:4px 10px;border-radius:16px;background:transparent;color:var(--red);border:1px solid var(--red);cursor:pointer;font-weight:700;letter-spacing:1px;transition:all 0.3s}
         .btn-logout:hover{background:var(--red);color:#fff}
         .dash-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:10px}
-        .dash-card{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:14px 8px;text-align:center;transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275)}
+        .dash-card{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:14px 8px;text-align:center;transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);display:flex;flex-direction:column;align-items:center;justify-content:center}
         .dash-card.clickable{cursor:pointer}
         .dash-card.clickable:hover{border-color:var(--gold);transform:translateY(-5px) scale(1.02);box-shadow:0 10px 30px rgba(0,0,0,0.5),0 0 20px rgba(224,176,64,0.2)}
-        .dash-card .val{font-size:28px;font-weight:900}
-        .dash-card .lbl{font-size:8px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;color:var(--muted);font-weight:700}
+        .dash-card .val{font-size:28px;font-weight:900;line-height:1}
+        .dash-card .val-pct{font-size:11px;font-weight:700;margin-top:2px;opacity:0.9}
+        .dash-card .lbl{font-size:8px;text-transform:uppercase;letter-spacing:2px;margin-top:6px;color:var(--muted);font-weight:700}
         .dash-card.total{border-color:rgba(0,212,255,0.4)!important;box-shadow:0 0 20px rgba(0,212,255,0.15),inset 0 0 20px rgba(0,212,255,0.05)!important;cursor:default!important}
         .dash-card.total:hover{border-color:rgba(0,212,255,0.4)!important;transform:none!important;box-shadow:0 0 20px rgba(0,212,255,0.15),inset 0 0 20px rgba(0,212,255,0.05)!important}
         .dash-card.total .val{color:var(--blue);text-shadow:0 0 15px rgba(0,212,255,0.5)}
-        .dash-card.valid .val{color:var(--green)}.dash-card.warn .val{color:var(--orange)}
-        .dash-card.exp .val{color:var(--red);animation:blink 1s infinite}
+        .dash-card.valid .val{color:var(--green);text-shadow:0 0 10px rgba(0,255,65,0.4)}.dash-card.warn .val{color:var(--orange);text-shadow:0 0 10px rgba(255,149,0,0.4)}
+        .dash-card.exp .val{color:var(--red);text-shadow:0 0 10px rgba(255,59,48,0.4);animation:blink 1s infinite}
         .dash-card.printed .val{color:var(--gold)}.dash-card.unprinted .val{color:#aaa}
         @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
-        .wo-progress-box{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:10px 14px;margin-bottom:10px}
-        .wo-progress-header{display:flex;justify-content:space-between;margin-bottom:4px}
-        .wo-progress-header span:first-child{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:700}
-        .wo-progress-header span:last-child{font-size:9px;color:var(--gold);font-weight:900}
-        .wo-progress-bar{background:#1a1a1a;border-radius:6px;height:8px;overflow:hidden}
-        .wo-progress-fill{background:linear-gradient(90deg,var(--gold),#f0c850);height:100%;width:0%;transition:width 0.5s ease;border-radius:6px}
+        .wo-progress-box{background:var(--card);border:2px solid #1a2a1a;border-radius:14px;padding:14px 16px;margin-bottom:10px;position:relative;overflow:hidden}
+        .wo-progress-box::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(0,255,65,0.02),transparent);animation:shimmer 3s infinite}
+        @keyframes shimmer{100%{left:100%}}
+        .wo-progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+        .wo-progress-header .wo-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;font-weight:700}
+        .wo-progress-header .wo-percent{font-size:20px;font-weight:900;color:var(--green);text-shadow:0 0 10px rgba(0,255,65,0.5);letter-spacing:1px}
+        .wo-progress-bar{background:#0a0a0a;border-radius:12px;height:14px;overflow:hidden;border:1px solid #1a2a1a;box-shadow:inset 0 2px 8px rgba(0,0,0,0.8)}
+        .wo-progress-fill{height:100%;border-radius:12px;transition:width 0.8s cubic-bezier(0.175,0.885,0.32,1.275);background:linear-gradient(90deg,#00cc33,#00ff41,#4ade80);box-shadow:0 0 20px rgba(0,255,65,0.4),inset 0 1px 3px rgba(255,255,255,0.2);position:relative}
+        .wo-progress-fill::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);animation:progressShine 2s infinite}
+        @keyframes progressShine{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+        .wo-progress-stats{display:flex;gap:20px;margin-top:10px;font-size:10px;color:var(--muted);letter-spacing:1px;justify-content:center}
+        .wo-progress-stats span{display:flex;align-items:center;gap:5px}
+        .wo-stat-dot{width:7px;height:7px;border-radius:50%}
+        .wo-stat-dot.done{background:var(--green);box-shadow:0 0 8px rgba(0,255,65,0.6)}
+        .wo-stat-dot.pending{background:#333;border:1px solid #555}
         .chart-box{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:14px}
         .chart-box h4{font-size:10px;color:var(--gold);text-align:center;margin-bottom:6px;letter-spacing:1px}
         .backup-info{display:flex;gap:8px;align-items:center;justify-content:center;padding:4px 0 8px;font-size:9px;color:var(--muted)}
@@ -187,19 +197,24 @@
     </div>
     <div class="dash-grid">
         <div class="dash-card total"><div class="val" id="dashTotal">0</div><div class="lbl">Total Instruments</div></div>
-        <div class="dash-card valid clickable" onclick="filterByStatus('ok')"><div class="val" id="dashValid">0</div><div class="lbl">Valid</div></div>
-        <div class="dash-card warn clickable" onclick="filterByStatus('warn')"><div class="val" id="dashApproach">0</div><div class="lbl">Approaching</div></div>
-        <div class="dash-card exp clickable" onclick="filterByStatus('exp')"><div class="val" id="dashExpired">0</div><div class="lbl">Expired</div></div>
-        <div class="dash-card printed clickable" onclick="filterByPrinted('yes')"><div class="val" id="dashPrinted">0</div><div class="lbl">With WO</div></div>
-        <div class="dash-card unprinted clickable" onclick="filterByPrinted('no')"><div class="val" id="dashUnprinted">0</div><div class="lbl">Without WO</div></div>
+        <div class="dash-card valid clickable" onclick="filterByStatus('ok')"><div class="val" id="dashValid">0</div><div class="val-pct" id="dashValidPct" style="color:var(--green);">0%</div><div class="lbl">Valid</div></div>
+        <div class="dash-card warn clickable" onclick="filterByStatus('warn')"><div class="val" id="dashApproach">0</div><div class="val-pct" id="dashApproachPct" style="color:var(--orange);">0%</div><div class="lbl">Approaching</div></div>
+        <div class="dash-card exp clickable" onclick="filterByStatus('exp')"><div class="val" id="dashExpired">0</div><div class="val-pct" id="dashExpiredPct" style="color:var(--red);">0%</div><div class="lbl">Expired</div></div>
+        <div class="dash-card printed clickable" onclick="filterByPrinted('yes')"><div class="val" id="dashPrinted">0</div><div class="val-pct" id="dashPrintedPct" style="color:var(--gold);">0%</div><div class="lbl">With WO</div></div>
+        <div class="dash-card unprinted clickable" onclick="filterByPrinted('no')"><div class="val" id="dashUnprinted">0</div><div class="val-pct" id="dashUnprintedPct" style="color:#aaa;">0%</div><div class="lbl">Without WO</div></div>
     </div>
     <div class="wo-progress-box">
         <div class="wo-progress-header">
-            <span>WO Completion</span>
-            <span id="woPercent">0%</span>
+            <span class="wo-label">WO Completion</span>
+            <span class="wo-percent" id="woPercent">0%</span>
         </div>
         <div class="wo-progress-bar">
             <div class="wo-progress-fill" id="woBar"></div>
+        </div>
+        <div class="wo-progress-stats">
+            <span><div class="wo-stat-dot done"></div> Done: <b id="woDone" style="color:var(--green)">0</b></span>
+            <span><div class="wo-stat-dot pending"></div> Pending: <b id="woPending" style="color:#888">0</b></span>
+            <span>Total: <b id="woTotal" style="color:#fff">0</b></span>
         </div>
     </div>
     <div style="display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:10px;">
@@ -321,7 +336,7 @@ function changeRowsPerPage(){rowsPerPage=parseInt(document.getElementById('rowsP
 function toggleTable(){tableVisible=!tableVisible;document.querySelector('.table-wrap').style.display=tableVisible?'block':'none';document.getElementById('btnToggleTable').textContent=tableVisible?'Hide Table':'Show Table'}
 function renderTabel(){var f=getFilteredData(),role=localStorage.getItem(ROLE_KEY),tb=document.getElementById('tabelBody');var total=f.length,totalPages=Math.ceil(total/rowsPerPage);if(currentPage>totalPages)currentPage=Math.max(1,totalPages);var start=(currentPage-1)*rowsPerPage,pageData=f.slice(start,start+rowsPerPage);if(total===0){tb.innerHTML='<tr><td colspan="13" class="empty-state">No data available.</td></tr>'}else{tb.innerHTML=pageData.map(function(i,idx){var st=getStatus(i.tglExp),woCount=countWO(i);var woDisplay=(i.wo&&String(i.wo).trim())?escHTML(i.wo):(isPrinted(i)?'[CHECKED]':'-');var rowClass='';if(st.class==='status-warn')rowClass='status-warn-row';if(st.class==='status-exp')rowClass='status-exp-row';var aksi=(role==='admin')?'<button class="btn-action" onclick="editData(\''+i.id+'\')">Edit</button><button class="btn-action del" onclick="hapusData(\''+i.id+'\')">Delete</button>':'<span style="color:#555">-</span>';return '<tr class="'+rowClass+'"><td>'+(start+idx+1)+'</td><td>'+woDisplay+'</td><td><span class="'+(woCount===0?'wo-count-zero':'wo-count-filled')+'">'+woCount+'</span></td><td>'+escHTML(i.tag)+'</td><td>'+escHTML(i.deptPlant||'')+'</td><td>'+escHTML(i.section||'')+'</td><td>'+escHTML(i.site||'')+'</td><td>'+i.period+' Mo</td><td class="tgl-col">'+fmtTgl(i.tglCal)+'</td><td class="tgl-col">'+fmtTgl(i.tglExp)+'</td><td class="'+st.class+'">'+st.label+'</td><td>'+escHTML(i.ket||'')+'</td><td>'+aksi+'</td></tr>'}).join('')}if(role!=='admin')document.getElementById('thAksi').style.display='none';else document.getElementById('thAksi').style.display='';document.getElementById('tableInfo').textContent=total+' data | Page '+currentPage+' of '+totalPages;var pag=document.getElementById('pagination');pag.innerHTML='<button '+(currentPage===1?'disabled':'')+' onclick="goPage('+(currentPage-1)+')">Prev</button><span class="page-num">'+currentPage+'</span><button '+(currentPage===totalPages||totalPages===0?'disabled':'')+' onclick="goPage('+(currentPage+1)+')">Next</button>'}
 function goPage(p){currentPage=p;renderAll()}
-function updateDashboard(){var data=getData(),v=0,a=0,e=0,pr=0,un=0;data.forEach(function(i){var st=getStatus(i.tglExp);if(st.class==='status-ok')v++;else if(st.class==='status-warn')a++;else if(st.class==='status-exp')e++;if(countWO(i)>0)pr++;else un++});document.getElementById('dashTotal').textContent=data.length;document.getElementById('dashValid').textContent=v;document.getElementById('dashApproach').textContent=a;document.getElementById('dashExpired').textContent=e;document.getElementById('dashPrinted').textContent=pr;document.getElementById('dashUnprinted').textContent=un;var woPercent=data.length>0?Math.round((pr/data.length)*100):0;var bar=document.getElementById('woBar');var txt=document.getElementById('woPercent');if(bar)bar.style.width=woPercent+'%';if(txt)txt.textContent=woPercent+'%'}
+function updateDashboard(){var data=getData(),v=0,a=0,e=0,pr=0,un=0;data.forEach(function(i){var st=getStatus(i.tglExp);if(st.class==='status-ok')v++;else if(st.class==='status-warn')a++;else if(st.class==='status-exp')e++;if(countWO(i)>0)pr++;else un++});var total=data.length||1;document.getElementById('dashTotal').textContent=data.length;document.getElementById('dashValid').textContent=v;document.getElementById('dashApproach').textContent=a;document.getElementById('dashExpired').textContent=e;document.getElementById('dashPrinted').textContent=pr;document.getElementById('dashUnprinted').textContent=un;document.getElementById('dashValidPct').textContent=Math.round((v/total)*100)+'%';document.getElementById('dashApproachPct').textContent=Math.round((a/total)*100)+'%';document.getElementById('dashExpiredPct').textContent=Math.round((e/total)*100)+'%';document.getElementById('dashPrintedPct').textContent=Math.round((pr/total)*100)+'%';document.getElementById('dashUnprintedPct').textContent=Math.round((un/total)*100)+'%';var woPercent=data.length>0?Math.round((pr/data.length)*100):0;var bar=document.getElementById('woBar');var txt=document.getElementById('woPercent');var done=document.getElementById('woDone');var pending=document.getElementById('woPending');var totalWO=document.getElementById('woTotal');if(bar){bar.style.width=woPercent+'%';bar.style.background='linear-gradient(90deg, #00cc33, #00ff41, #4ade80)';bar.style.boxShadow='0 0 20px rgba(0,255,65,0.4)';}if(txt)txt.textContent=woPercent+'%';if(done)done.textContent=pr;if(pending)pending.textContent=un;if(totalWO)totalWO.textContent=data.length;}
 function updateBackupInfo(){var data=getData();document.getElementById('infoJumlah').textContent=data.length;var storageKB=(new Blob([JSON.stringify(data)]).size/1024).toFixed(1);document.getElementById('infoStorage').textContent=storageKB+' KB';if(parseFloat(storageKB)>4000){document.getElementById('infoStorage').style.color='var(--red)';showToast('Storage almost full! Backup & clean old data.','warn')}else{document.getElementById('infoStorage').style.color=''}document.getElementById('infoBackup').textContent=localStorage.getItem(BACKUP_KEY)||'-';document.getElementById('infoCloud').textContent=(localStorage.getItem(CLOUD_BACKUP_KEY)||'-')+' (auto)'}
 var chartBulanInstance,chartWOInstance;
 function updateCharts(){if(typeof Chart==='undefined')return;if(chartBulanInstance){chartBulanInstance.destroy();chartBulanInstance=null}if(chartWOInstance){chartWOInstance.destroy();chartWOInstance=null}var data=getData();var bulan=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];var perBulan=Array(12).fill(0);data.forEach(function(i){if(i.tglExp){perBulan[new Date(i.tglExp).getMonth()]++}});var ctx1=document.getElementById('chartBulan');if(ctx1){chartBulanInstance=new Chart(ctx1,{type:'bar',data:{labels:bulan,datasets:[{data:perBulan,backgroundColor:'rgba(224,176,64,0.7)',borderColor:'#e0b040',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:true,scales:{y:{beginAtZero:true,ticks:{color:'#888'},grid:{color:'#252525'}},x:{ticks:{color:'#888'}}},plugins:{legend:{display:false}}}})}var printed=0,unprinted=0;data.forEach(function(i){if(countWO(i)>0)printed++;else unprinted++});var ctx2=document.getElementById('chartWO');if(ctx2){chartWOInstance=new Chart(ctx2,{type:'doughnut',data:{labels:['With WO','Without WO'],datasets:[{data:[printed,unprinted],backgroundColor:['#e0b040','#333'],borderColor:'#0d0d0d',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{color:'#888',font:{size:11}}}}}})}}
